@@ -1,0 +1,13 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+#    web-application-type: none # 웹 애플리케이션 타입으로 실행하지 않음
+
+
+server:
+  port: 0 # 랜덤 포트번호 사용
+#  port: 7070 # 특정 포트번호 사용
+
+holoman:
+  name: 김용환
+  how-long: 60

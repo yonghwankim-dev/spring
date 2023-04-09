@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Home</h1>
+    <h1 th:if="${session.member != null}" th:text="${session.member}"></h1>
+    <a th:if="${session.member == null}" href="/login">Login</a>
+    <a th:if="${session.member != null}" href="/logout">Logout</a>
+</body>
+</html>

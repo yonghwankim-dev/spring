@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    group:
+      "local": "h2db"
+      "dev": "mysqldb"
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type : trace
+    org.springframework.web : debug
+    org.springframework.security: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "testdb"
+
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings.trace: false
+      settings.web-allow-others: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "mysqldb"
+  datasource:
+    hikari:
+      maximum-pool-size: 4
+    url: jdbc:mysql://localhost:3306/springboot
+    username: yonghwan
+    password: pass

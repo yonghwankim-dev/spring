@@ -1,0 +1,20 @@
+server:
+  port: 8443
+  ssl:
+#    key-store: keystore.p12
+#    key-store-password: 123456
+#    keyStoreType: PKCS12
+#    keyAlias: tomcat
+
+    key-store: "classpath:keystore.jks"
+    key-store-password: "secret"
+    key-password: "another-secret"
+
+  # http2 ??
+  http2:
+    enabled: true
+  # ?? ?? ???
+  compression:
+    enabled: false
+    min-response-size: 2048
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript

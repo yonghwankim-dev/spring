@@ -1,0 +1,23 @@
+logging:
+  level:
+    # logging 레벨별 설정
+    root: info
+    kr.yh: DEBUG
+    org.springframework.web: DEBUG
+  #logging 파일출력
+  file:
+    path: logs
+    name: spring2.log
+
+yonghwan:
+  name: YONGHWAN
+  age: 30
+  full-name: ${yonghwan.name} Kim
+  session-timeout: 40
+
+# 로그 컬러 출력
+spring:
+  output:
+    ansi:
+      enabled: always
+

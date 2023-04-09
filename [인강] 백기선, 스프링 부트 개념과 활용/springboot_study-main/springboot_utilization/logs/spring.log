@@ -1,0 +1,18 @@
+2022-11-01 16:55:49.347  INFO 10520 --- [main] kr.yh.SpringbootUtilizationApplication   : Starting SpringbootUtilizationApplication using Java 15.0.1 on LAPTOP-LFUMP8SR with PID 10520 (C:\Users\qkdlf\Study\SpringBoot\springboot_basic\springboot_utilization\build\classes\java\main started by qkdlf in C:\Users\qkdlf\Study\SpringBoot\springboot_basic\springboot_utilization)
+2022-11-01 16:55:49.352  INFO 10520 --- [main] kr.yh.SpringbootUtilizationApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-11-01 16:55:50.512  INFO 10520 --- [main] kr.yh.SpringbootUtilizationApplication   : Started SpringbootUtilizationApplication in 1.746 seconds (JVM running for 2.64)
+2022-11-01 16:57:48.343  INFO 14084 --- [main] kr.yh.SpringbootUtilizationApplication   : Starting SpringbootUtilizationApplication using Java 15.0.1 on LAPTOP-LFUMP8SR with PID 14084 (C:\Users\qkdlf\Study\SpringBoot\springboot_basic\springboot_utilization\build\classes\java\main started by qkdlf in C:\Users\qkdlf\Study\SpringBoot\springboot_basic\springboot_utilization)
+2022-11-01 16:57:48.348 DEBUG 14084 --- [main] kr.yh.SpringbootUtilizationApplication   : Running with Spring Boot v2.7.4, Spring v5.3.23
+2022-11-01 16:57:48.349  INFO 14084 --- [main] kr.yh.SpringbootUtilizationApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-11-01 16:57:50.221  INFO 14084 --- [main] kr.yh.SpringbootUtilizationApplication   : Started SpringbootUtilizationApplication in 2.485 seconds (JVM running for 3.297)
+2022-11-01 17:02:14.895  INFO 16576 --- [Test worker] kr.yh.logging.LoggingTest                : Starting LoggingTest using Java 15.0.1 on LAPTOP-LFUMP8SR with PID 16576 (started by qkdlf in C:\Users\qkdlf\Study\SpringBoot\springboot_basic\springboot_utilization)
+2022-11-01 17:02:14.897 DEBUG 16576 --- [Test worker] kr.yh.logging.LoggingTest                : Running with Spring Boot v2.7.4, Spring v5.3.23
+2022-11-01 17:02:14.899  INFO 16576 --- [Test worker] kr.yh.logging.LoggingTest                : No active profile set, falling back to 1 default profile: "default"
+2022-11-01 17:02:14.987 DEBUG 16576 --- [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@777c350f
+2022-11-01 17:02:19.841 DEBUG 16576 --- [Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-01 17:02:20.299 DEBUG 16576 --- [Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 2 mappings in 'requestMappingHandlerMapping'
+2022-11-01 17:02:20.578 DEBUG 16576 --- [Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-01 17:02:20.611 DEBUG 16576 --- [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-01 17:02:21.006  INFO 16576 --- [Test worker] kr.yh.logging.LoggingTest                : Started LoggingTest in 9.055 seconds (JVM running for 14.312)
+2022-11-01 17:02:22.977  INFO 16576 --- [Test worker] kr.yh.logging.LoggingTest                : hello log
+2022-11-01 17:02:23.006 DEBUG 16576 --- [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@777c350f, started on Tue Nov 01 17:02:14 KST 2022

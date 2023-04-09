@@ -1,0 +1,7 @@
+yonghwan:
+  name: yonghwan prod
+spring:
+  config:
+    import: application-proddb.yml
+
+

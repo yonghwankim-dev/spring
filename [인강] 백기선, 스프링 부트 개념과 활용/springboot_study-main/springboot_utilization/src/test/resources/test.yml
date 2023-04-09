@@ -1,0 +1,25 @@
+yonghwan:
+  name: YongHwan
+  age: 20
+my:
+  number:
+    nodeValue: ${random.int}
+    in:
+      range: ${random.int[1024,65536]}
+    less:
+      than:
+        ten: ${random.int(10)}
+  bignumber: ${random.long}
+  secret: ${random.value}
+  uuid: ${random.uuid}
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+    root: info
+server:
+  number[1]: 3
+  number[0]: 5
+  port: 9090

@@ -1,0 +1,1 @@
+INSERT INTO MEMBER(name, userid, password) VALUES ('홍길동', 'user1', 'user1');
