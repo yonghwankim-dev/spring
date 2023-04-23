@@ -38,7 +38,11 @@
 - [빈 생명주기(Bean Lifecycle)](%5B도서%5D토비의스프링/tobi-spring/docs/빈_라이프사이클.md)
 
 
-
+## 학습 키워드
+- 다형성
+- SRP(Single Responsibility Principle)
+- DIP(Dependency Injection Principle)
+- OCP(Open-Closed Principle) 
 
 
 
