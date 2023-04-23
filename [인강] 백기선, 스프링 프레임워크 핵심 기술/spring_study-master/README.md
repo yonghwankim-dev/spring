@@ -33,7 +33,7 @@
 26. [\[Spring\] Null-safety : Null 관련 애노테이션](https://yonghwankim-dev.tistory.com/542)
 
 ## 스프링 원리
-
+- [다형성(Polymorphism)](https://yonghwankim-dev.tistory.com/584)
 - [의존관계 주입(Dependency Injection)](%5B도서%5D토비의스프링/tobi-spring/docs/의존관계%20주입.md)
 - [빈 생명주기(Bean Lifecycle)](%5B도서%5D토비의스프링/tobi-spring/docs/빈_라이프사이클.md)
 
