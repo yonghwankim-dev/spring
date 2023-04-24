@@ -40,6 +40,7 @@
 
 ### log
 - [SLF4J 개념 및 동작과정](https://yonghwankim-dev.tistory.com/585)
+- [Logback 라이브러리 설정](https://yonghwankim-dev.tistory.com/586)
 
 ## 학습 키워드
 - 다형성
