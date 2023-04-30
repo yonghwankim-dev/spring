@@ -41,6 +41,7 @@
 ### log
 - [SLF4J 개념 및 동작과정](https://yonghwankim-dev.tistory.com/585)
 - [Logback 라이브러리 설정](https://yonghwankim-dev.tistory.com/586)
+- [애플리케이션 logging을 위한 적절한 방법](https://yonghwankim-dev.tistory.com/587)
 
 ## 학습 키워드
 - 다형성
