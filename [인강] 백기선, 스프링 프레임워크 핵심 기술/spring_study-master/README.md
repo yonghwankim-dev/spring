@@ -43,6 +43,7 @@
 ### 컴포넌트 스캔
 - [컴포넌트 스캔(ComponentScan)](https://yonghwankim-dev.tistory.com/589)
 - [컴포넌트 스캔의 필터(Filter) 생성](https://yonghwankim-dev.tistory.com/590)
+- [컴포넌트 스캔의 스프링 빈 중복 등록과 충돌](https://yonghwankim-dev.tistory.com/591)
 
 ### log
 - [SLF4J 개념 및 동작과정](https://yonghwankim-dev.tistory.com/585)
