@@ -33,6 +33,8 @@
 26. [\[Spring\] Null-safety : Null 관련 애노테이션](https://yonghwankim-dev.tistory.com/542)
 
 ## 스프링 원리
+### 객체지향설계와 스프링
+- [SRP(Single Responsility Principle, 단일 책임 원칙)](https://yonghwankim-dev.tistory.com/588)
 ### Ioc & DI
 - [다형성(Polymorphism)](https://yonghwankim-dev.tistory.com/584)
 - [의존관계 주입(Dependency Injection)](%5B도서%5D토비의스프링/tobi-spring/docs/의존관계%20주입.md)
