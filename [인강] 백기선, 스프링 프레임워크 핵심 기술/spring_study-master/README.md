@@ -40,6 +40,9 @@
 - [의존관계 주입(Dependency Injection)](%5B도서%5D토비의스프링/tobi-spring/docs/의존관계%20주입.md)
 - [빈 생명주기(Bean Lifecycle)](%5B도서%5D토비의스프링/tobi-spring/docs/빈_라이프사이클.md)
 
+### 컴포넌트 스캔
+- [컴포넌트 스캔(ComponentScan)](https://yonghwankim-dev.tistory.com/589)
+
 ### log
 - [SLF4J 개념 및 동작과정](https://yonghwankim-dev.tistory.com/585)
 - [Logback 라이브러리 설정](https://yonghwankim-dev.tistory.com/586)
