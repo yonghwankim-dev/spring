@@ -46,6 +46,7 @@
 
 ### 의존관계 자동 주입
 - [@Autowired를 이용한 의존관계 주입 방법](https://yonghwankim-dev.tistory.com/501)
+- [@Qualifier, @Primary를 사용하여 스프링 빈 조회](https://yonghwankim-dev.tistory.com/592)
 
 ### log
 - [SLF4J 개념 및 동작과정](https://yonghwankim-dev.tistory.com/585)
