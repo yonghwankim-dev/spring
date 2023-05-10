@@ -24,6 +24,6 @@ public class Member {
     private String id;
     @Column(name = "NAME")
     private String username;
-    // 매핑 정보가 없는 필드
+    @Column(name = "AGE")
     private Integer age;
 }
