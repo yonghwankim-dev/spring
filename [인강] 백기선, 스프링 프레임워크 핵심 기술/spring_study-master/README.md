@@ -48,6 +48,9 @@
 - [@Autowired를 이용한 의존관계 주입 방법](https://yonghwankim-dev.tistory.com/501)
 - [@Qualifier, @Primary를 사용하여 스프링 빈 조회](https://yonghwankim-dev.tistory.com/592)
 
+### 빈 생명주기 콜백
+- [빈 생명주기 콜백](https://yonghwankim-dev.tistory.com/593)
+
 ### log
 - [SLF4J 개념 및 동작과정](https://yonghwankim-dev.tistory.com/585)
 - [Logback 라이브러리 설정](https://yonghwankim-dev.tistory.com/586)
