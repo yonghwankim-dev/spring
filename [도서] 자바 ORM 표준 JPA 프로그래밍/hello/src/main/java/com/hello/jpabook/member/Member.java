@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Getter
@@ -33,11 +34,12 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private String id;
+
     @Column(name = "NAME", nullable = false, length = 10)
     private String username;
+
     @Column(name = "AGE")
     private Integer age;
 

@@ -5,15 +5,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
+
 import javax.persistence.TypedQuery;
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.transaction.annotation.Transactional;
 
 
 public class EntityTest {
@@ -22,7 +21,7 @@ public class EntityTest {
     private EntityManager em;
 
     @BeforeAll
-    public static void beforeAll() {
+    static void beforeAll() {
         emf = Persistence.createEntityManagerFactory("jpabook");
     }
 
@@ -34,8 +33,9 @@ public class EntityTest {
     @Test
     public void registerEntity() {
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", null);
-        Member member2 = new Member("member2", "회원2", null);
+
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
+        Member member2 = Member.builder().id("member2").username("회원2").age(20).build();
 
         // 엔티티 매니저는 데이터 변경시 트랜잭션을 시작해야 한다.
         transaction.begin();
@@ -53,7 +53,7 @@ public class EntityTest {
     @Test
     public void updateEntity() {
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", null);
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
         transaction.begin();
         em.persist(member1);
 
@@ -71,7 +71,7 @@ public class EntityTest {
     @Test
     public void deleteEntity() {
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", null);
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
         transaction.begin();
         em.persist(member1);
 
@@ -87,7 +87,7 @@ public class EntityTest {
     public void executeJPQLQuery() {
         em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", 20);
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
         transaction.begin();
         em.persist(member1);
 
@@ -104,7 +104,7 @@ public class EntityTest {
     @Test
     public void detachEntity() {
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", 20);
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
         transaction.begin();
         em.persist(member1);
 
@@ -124,7 +124,7 @@ public class EntityTest {
     public void clearEntityManager() {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", 20);
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
 
         transaction.begin();
         em.persist(member1);
@@ -141,7 +141,7 @@ public class EntityTest {
     public void closePersistenceContext() {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", 20);
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
 
         transaction.begin();
         em.persist(member1);
@@ -155,7 +155,7 @@ public class EntityTest {
     public void mergeMember() {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        Member member1 = new Member("member1", "회원1", 20);
+        Member member1 = Member.builder().id("member1").username("회원1").age(20).build();
 
         transaction.begin();
         em.persist(member1);
@@ -176,6 +176,8 @@ public class EntityTest {
 
         Assertions.assertThat(em.contains(member1)).isFalse();
         Assertions.assertThat(em.contains(merge)).isTrue();
+
+        Assertions.assertThat(member1 == merge).isFalse();
 
         transaction = em.getTransaction();
         transaction.begin();
