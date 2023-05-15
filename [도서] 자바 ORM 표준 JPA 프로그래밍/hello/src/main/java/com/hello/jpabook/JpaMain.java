@@ -31,7 +31,11 @@ public class JpaMain {
 
     private static void logic(EntityManager em) {
         String id = "id1";
-        Member member = new Member(id, "김용환", 20);
+        Member member = Member.builder()
+            .id(id)
+            .username("김용환")
+            .age(20)
+            .build();
 
         // 등록
         em.persist(member);
