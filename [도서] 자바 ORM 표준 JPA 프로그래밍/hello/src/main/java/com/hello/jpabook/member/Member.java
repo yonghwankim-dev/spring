@@ -2,6 +2,8 @@ package com.hello.jpabook.member;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

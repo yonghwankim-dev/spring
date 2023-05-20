@@ -5,6 +5,7 @@
     <!-- 엔티티 클래스 -->
     <class>com.hello.jpabook.member.Member</class>
     <class>com.hello.jpabook.board.Board</class>
+    <class>com.hello.jpabook.member.Member2</class>
     <properties>
       <!-- 필수 속성 -->
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

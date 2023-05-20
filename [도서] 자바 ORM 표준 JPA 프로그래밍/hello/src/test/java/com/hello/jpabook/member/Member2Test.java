@@ -1,6 +1,7 @@
-package com.hello.entity;
+package com.hello.jpabook.member;
 
-import com.hello.jpabook.board.Board;
+import static org.junit.jupiter.api.Assertions.*;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class EntityMappingTest {
+class Member2Test {
 
     private static EntityManagerFactory emf;
     private EntityManager em;
@@ -26,18 +27,23 @@ public class EntityMappingTest {
         em = emf.createEntityManager();
     }
 
+
     @Test
-    @DisplayName("기본키 생성 전략을 IDENTITY로 설정하여 기본키 생성을 데이터베이스에 위임하는지 테스트")
-    public void identity() {
+    @DisplayName("회원 엔티티를 생성하고 getFullName 메소드를 호출하여 firstName과 lastName 프로퍼티에 접근한다")
+    public void property() {
         // given
         EntityTransaction transaction = em.getTransaction();
-        Board board = new Board();
+        Member2 member = Member2.builder()
+            .firstName("kim")
+            .lastName("yonghwan")
+            .build();
         // when
         transaction.begin();
-        em.persist(board);
+        em.persist(member);
+        Member2 findMember = em.find(Member2.class, member.getId());
+        String fullName = findMember.getFullName();
         // then
-        Board foundBoard = em.find(Board.class, board.getId());
-        Assertions.assertThat(foundBoard.getId()).isEqualTo(1L);
+        Assertions.assertThat(fullName).isEqualTo("kimyonghwan");
         transaction.rollback();
     }
 }
