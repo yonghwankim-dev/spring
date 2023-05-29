@@ -1,5 +1,6 @@
 package com.hello.jpabook_practice.model.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -36,15 +38,16 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
-
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery; // 배송정보
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate; // 주문시간
@@ -54,18 +57,21 @@ public class Order {
 
     //==연관관계 메소드==//
     public void setMember(Member member) {
-        // 연관관계 제거
+        // 기존 연관관계 제거
         if (this.member != null) {
             this.member.getOrders().remove(this);
         }
         this.member = member;
-        if (this.member != null) {
-            this.member.getOrders().add(this);
-        }
+        this.member.getOrders().add(this);
     }
 
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
     }
 }

@@ -1,5 +1,7 @@
 package com.hello.jpabook_practice.model.entity;
 
+import static javax.persistence.GenerationType.TABLE;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,28 +16,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "ORDER_ITEM")
 @TableGenerator(
-    name = "ORDER_ITEM_SEQ_GENERATOR",
+    name = "CATEGORY_ITEM_SEQ_GENERATOR",
     table = "JPABOOK_SEQUENCES",
-    pkColumnValue = "ORDER_ITEM_SEQ"
+    pkColumnValue = "CATEGORY_ITEM_SEQ"
 )
-public class OrderItem {
+public class CategoryItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ORDER_ITEM_SEQ_GENERATOR")
-    @Column(name = "ORDER_ITEM_ID")
+    @GeneratedValue(strategy = TABLE, generator = "CATEGORY_ITEM_SEQ_GENERATOR")
+    @Column(name = "CATEGORY_ITEM_ID")
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "ORDER_ID")
-    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
-    private int orderPrice; // 주문 가격
-
-    private int count; // 주문 수량
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
+    private Category category;
 }

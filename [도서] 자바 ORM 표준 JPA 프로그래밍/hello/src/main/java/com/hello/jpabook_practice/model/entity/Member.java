@@ -9,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 @Entity
 @TableGenerator(
     name = "MEMBER_SEQ_GENERATOR",
@@ -29,6 +31,7 @@ public class Member {
 
     private String name;
     private String city;
+    private String street;
     private String zipcode;
 
     @OneToMany(mappedBy = "member")

@@ -74,8 +74,10 @@ class MemberTest {
         EntityTransaction transaction = em.getTransaction();
         // when
         transaction.begin();
+        em.persist(team1);
         em.persist(member1);
         em.persist(member2);
+        em.flush();
         // then
         Member findMember = em.find(Member.class, member1.getId());
         Assertions.assertThat(findMember.getTeam().getId()).isEqualTo(team1.getId());
