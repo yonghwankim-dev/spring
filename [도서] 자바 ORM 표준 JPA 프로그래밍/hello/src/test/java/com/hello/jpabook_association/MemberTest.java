@@ -30,6 +30,7 @@ class MemberTest {
         em = emf.createEntityManager();
     }
 
+
     @Test
     @DisplayName("회원1과 회원2, 팀1이 주어지고 회원들이 팀에 소속될때 회원은 팀을 참조할 수 있다")
     public void test1() {

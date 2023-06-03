@@ -31,7 +31,7 @@ import lombok.Setter;
     table = "JPABOOK_SEQUENCES",
     pkColumnValue = "ORDER_SEQ"
 )
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "ORDER_SEQ_GENERATOR")

@@ -1,18 +1,11 @@
-package com.hello.jpabook_practice.model.entity;
+package com.hello.jpabook_practice.model.entity.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.TableGenerator;
+import javax.persistence.*;
 import javax.print.attribute.standard.MediaSize.NA;
+
+import com.hello.jpabook_practice.model.entity.CategoryItem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,11 +13,13 @@ import lombok.Setter;
 @Setter
 @Entity
 @TableGenerator(
-    name = "ITEM_SEQ_GENERATOR",
-    table = "JPABOOK_SEQUENCES",
-    pkColumnValue = "ITEM_SEQ"
+        name = "ITEM_SEQ_GENERATOR",
+        table = "JPABOOK_SEQUENCES",
+        pkColumnValue = "ITEM_SEQ"
 )
-public class Item {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "DTYPE")
+public abstract class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "ITEM_SEQ_GENERATOR")

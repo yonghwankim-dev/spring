@@ -22,7 +22,7 @@ import lombok.Setter;
     table = "JPABOOK_SEQUENCES",
     pkColumnValue = "MEMBER_SEQ"
 )
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR")

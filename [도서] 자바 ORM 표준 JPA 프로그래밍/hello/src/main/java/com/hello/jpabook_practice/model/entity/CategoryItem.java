@@ -5,11 +5,12 @@ import static javax.persistence.GenerationType.TABLE;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
+
+import com.hello.jpabook_practice.model.entity.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 

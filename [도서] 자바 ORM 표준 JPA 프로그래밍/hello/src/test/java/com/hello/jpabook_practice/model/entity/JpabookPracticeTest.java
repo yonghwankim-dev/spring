@@ -2,14 +2,16 @@ package com.hello.jpabook_practice.model.entity;
 
 import static com.hello.jpabook_practice.model.entity.DeliveryStatus.*;
 import static com.hello.jpabook_practice.model.entity.OrderStatus.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+
+import com.hello.jpabook_practice.model.entity.item.Album;
+import com.hello.jpabook_practice.model.entity.item.Book;
+import com.hello.jpabook_practice.model.entity.item.Item;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +42,7 @@ class JpabookPracticeTest {
         Delivery delivery = new Delivery();
         Order order = new Order();
         OrderItem orderItem = new OrderItem();
-        Item jpa = new Item();
+        Item jpa = new Book();
         Category book = new Category();
         Category it = new Category();
         CategoryItem categoryItem = new CategoryItem();

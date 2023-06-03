@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+
+import com.hello.jpabook_practice.model.entity.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
