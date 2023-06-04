@@ -21,6 +21,4 @@ public class Child {
     @Column(name = "CHILD_ID")
     private String childId;
     private String name;
-
-
 }

@@ -20,6 +20,4 @@ public class Child {
     private Long id;
 
     private String name;
-
-
 }

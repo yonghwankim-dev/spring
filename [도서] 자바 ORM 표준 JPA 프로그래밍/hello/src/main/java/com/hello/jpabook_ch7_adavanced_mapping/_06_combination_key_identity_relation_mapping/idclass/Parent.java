@@ -17,6 +17,4 @@ public class Parent {
     @Column(name = "PARENT_ID")
     private String id;
     private String name;
-
-
 }
