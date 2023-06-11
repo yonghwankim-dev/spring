@@ -14,6 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 class ParentTest {
+
     private static EntityManagerFactory emf;
     private EntityManager em;
 
