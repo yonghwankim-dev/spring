@@ -3,6 +3,7 @@ package com.hello.jpabook_practice.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,17 +23,15 @@ import lombok.Setter;
     table = "JPABOOK_SEQUENCES",
     pkColumnValue = "MEMBER_SEQ"
 )
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR")
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+    @Embedded
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();

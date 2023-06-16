@@ -46,14 +46,10 @@ class JpabookPracticeTest {
         Category it = new Category();
         CategoryItem categoryItem = new CategoryItem();
 
-        member.setName("김용환");
-        member.setCity("서울");
-        member.setZipcode("29000");
+        member.setAddress(new Address("서울", "강남", "29000"));
 
         delivery.setDeliveryStatus(READY);
-        delivery.setCity("서울");
-        delivery.setStreet("강남구");
-        delivery.setZipcode("29000");
+        delivery.setAddress(new Address("서울", "강남", "29000"));
 
         order.setMember(member);
         order.setOrderStatus(ORDER);
@@ -124,14 +120,10 @@ class JpabookPracticeTest {
         Category it = new Category();
         CategoryItem categoryItem = new CategoryItem();
 
-        member.setName("김용환");
-        member.setCity("서울");
-        member.setZipcode("29000");
+        member.setAddress(new Address("서울", "강남", "29000"));
 
         delivery.setDeliveryStatus(READY);
-        delivery.setCity("서울");
-        delivery.setStreet("강남구");
-        delivery.setZipcode("29000");
+        delivery.setAddress(new Address("서울", "강남", "29000"));
 
         order.setMember(member);
         order.setOrderStatus(ORDER);

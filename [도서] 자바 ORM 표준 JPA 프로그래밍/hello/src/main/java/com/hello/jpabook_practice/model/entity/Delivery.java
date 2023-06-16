@@ -3,6 +3,7 @@ package com.hello.jpabook_practice.model.entity;
 import static javax.persistence.GenerationType.TABLE;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -32,9 +33,8 @@ public class Delivery {
     @OneToOne(mappedBy = "delivery")
     private Order order;
 
-    private String city;
-    private String street;
-    private String zipcode;
+    @Embedded
+    private Address address;
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
