@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,21 +36,21 @@ import lombok.ToString;
 @Entity
 public class Member {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "MEMBER_ID")
-    private Long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "MEMBER_ID")
+	private Long id;
 
-    private String username;
+	private String username;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
+	@OneToOne
+	@JoinColumn(name = "LOCKER_ID")
+	private Locker locker;
 
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-        if (this.locker.getMember() != this) {
-            this.locker.setMember(this);
-        }
-    }
+	public void setLocker(Locker locker) {
+		this.locker = locker;
+		if (this.locker.getMember() != this) {
+			this.locker.setMember(this);
+		}
+	}
 }

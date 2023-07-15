@@ -5,8 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import lombok.AllArgsConstructor;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,24 +18,24 @@ import lombok.ToString;
 @Entity
 public class Member {
 
-    @Id
-    @Column(name = "MEMBER_ID")
-    private String id;
+	@Id
+	@Column(name = "MEMBER_ID")
+	private String id;
 
-    private String username;
+	private String username;
 
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
-    private Team team; // 팀의 참조를 보관
+	@ManyToOne
+	@JoinColumn(name = "TEAM_ID")
+	private Team team; // 팀의 참조를 보관
 
-    public void setTeam(Team team) {
-        // 기존 팀과 관계를 제거
-        if (this.team != null) {
-            this.team.getMembers().remove(this);
-        }
-        this.team = team;
-        if (this.team != null) {
-            this.team.getMembers().add(this);
-        }
-    }
+	public void setTeam(Team team) {
+		// 기존 팀과 관계를 제거
+		if (this.team != null) {
+			this.team.getMembers().remove(this);
+		}
+		this.team = team;
+		if (this.team != null) {
+			this.team.getMembers().add(this);
+		}
+	}
 }

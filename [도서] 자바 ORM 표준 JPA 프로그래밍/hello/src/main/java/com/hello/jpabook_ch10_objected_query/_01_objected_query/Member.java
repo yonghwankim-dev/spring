@@ -4,24 +4,26 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @ToString
+@Getter
 public class Member {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "MEMBER_ID")
+	private Long id;
 
-    @Column(name = "name")
-    private String username;
+	@Column(name = "name")
+	private String username;
 
-    private int age;
+	private int age;
 }

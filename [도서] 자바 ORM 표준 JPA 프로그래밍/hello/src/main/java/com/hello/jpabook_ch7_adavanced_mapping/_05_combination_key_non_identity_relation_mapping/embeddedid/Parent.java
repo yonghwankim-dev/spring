@@ -1,17 +1,18 @@
 package com.hello.jpabook_ch7_adavanced_mapping._05_combination_key_non_identity_relation_mapping.embeddedid;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
 public class Parent {
 
-    @EmbeddedId
-    private ParentId id;
+	@EmbeddedId
+	private ParentId id;
 
-    private String name;
+	private String name;
 }

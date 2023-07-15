@@ -8,6 +8,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @DiscriminatorValue("B")
 @PrimaryKeyJoinColumn(name = "BOOK_ID")
 public class Book extends Item {
-    private String author;  // 작가
-    private String isbn;    // ISBN
+	private String author;  // 작가
+	private String isbn;    // ISBN
 }

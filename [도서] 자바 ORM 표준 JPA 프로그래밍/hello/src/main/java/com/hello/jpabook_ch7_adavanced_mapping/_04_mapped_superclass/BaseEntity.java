@@ -6,8 +6,8 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class BaseEntity {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
+	@Id
+	@GeneratedValue
+	private Long id;
+	private String name;
 }

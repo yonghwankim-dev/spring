@@ -2,7 +2,7 @@ package com.hello.jpabook_ch9_value_type._03_value_type_collection;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Address {
 
-    @Column
-    private String city;
-    private String street;
-    private String zipcode;
+	@Column
+	private String city;
+	private String street;
+	private String zipcode;
 }

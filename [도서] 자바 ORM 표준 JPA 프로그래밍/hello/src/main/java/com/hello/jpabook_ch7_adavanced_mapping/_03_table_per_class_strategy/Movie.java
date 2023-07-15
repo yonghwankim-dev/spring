@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 
 @Entity
 public class Movie extends Item {
-    private String director; // 감독
-    private String actor; // 배우
+	private String director; // 감독
+	private String actor; // 배우
 
 }
 

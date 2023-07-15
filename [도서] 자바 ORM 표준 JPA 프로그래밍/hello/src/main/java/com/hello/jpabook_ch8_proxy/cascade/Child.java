@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,17 +18,17 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Child {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "CHILD_ID")
-    private Long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "CHILD_ID")
+	private Long id;
 
-    private String name;
+	private String name;
 
-    @ManyToOne
-    private Parent parent;
+	@ManyToOne
+	private Parent parent;
 
-    public void setParent(final Parent parent) {
-        this.parent = parent;
-    }
+	public void setParent(final Parent parent) {
+		this.parent = parent;
+	}
 }

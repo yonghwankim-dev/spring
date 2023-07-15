@@ -2,14 +2,13 @@ package com.hello.jpabook_ch6_relationship_mapping.many_to_many.twoway_connectio
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +19,13 @@ import lombok.Setter;
 @Entity
 public class Member {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "MEMBER_ID")
-    private Long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "MEMBER_ID")
+	private Long id;
 
-    private String username;
+	private String username;
 
-    @OneToMany(mappedBy = "member")
-    private List<MemberProduct> memberProducts = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<MemberProduct> memberProducts = new ArrayList<>();
 }

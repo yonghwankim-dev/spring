@@ -413,10 +413,13 @@ public class Parent {
   - @OneToOne, @OneToMany에만 사용할 수 있습니다.
 
 ## 6. 영속성 전이 + 고아객체, 생명주기
+
 **CascadeType.ALL + orphanRemoval = true 적용시 발생하는 상황**
+
 - 부모 엔티티를 통해서 자식의 생명 주기를 관리할 수 있게 됩니다.
 - 예를 들어 자식을 저장하려면 부모에 등록만 하면 됩니다. (CASCADE)
 - 다른 예로 자식을 삭제하려면 부모에서 제거하면 됩니다. (orphanRemoval)
+
 ```
 Parent parent = em.find(Parent.class, parentId);
 parent.addChild(child1);

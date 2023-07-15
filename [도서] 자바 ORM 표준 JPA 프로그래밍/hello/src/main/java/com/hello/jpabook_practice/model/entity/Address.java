@@ -1,7 +1,7 @@
 package com.hello.jpabook_practice.model.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Embeddable
 public class Address {
 
-    private String city;
-    private String street;
-    private String zipcode;
+	private String city;
+	private String street;
+	private String zipcode;
 }
