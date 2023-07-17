@@ -2,6 +2,8 @@ package com.hello.jpabook_ch10_objected_query._01_objected_query;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,7 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString
+@ToString(exclude = {"member"})
 @Getter
 public class Orders {
 	@Id
@@ -31,4 +33,7 @@ public class Orders {
 	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
 	private int orderAmount;
+
+	@Enumerated(EnumType.STRING)
+	private Address address;
 }

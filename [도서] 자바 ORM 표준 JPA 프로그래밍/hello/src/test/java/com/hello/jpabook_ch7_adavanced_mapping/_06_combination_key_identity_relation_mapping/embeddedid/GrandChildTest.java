@@ -32,7 +32,7 @@ class GrandChildTest {
 		// given
 		Parent parent = new Parent("parent1", "parent");
 		ChildId childId = new ChildId(parent.getId(), "child1");
-		Child child = new Child(childId, parent, "child");
+		Child child = new Child(parent, childId, "child");
 		GrandChildId grandChildId = new GrandChildId(childId, "grandChild1");
 		GrandChild grandChild = new GrandChild(grandChildId, child, "grandChild");
 		// when

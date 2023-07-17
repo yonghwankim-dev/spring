@@ -848,11 +848,24 @@
         <!-- 엔티티 클래스 -->
         <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Member
         </class>
+        <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Team
+        </class>
         <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Product
         </class>
         <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Orders
         </class>
-
+        <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Item
+        </class>
+        <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Album
+        </class>
+        <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Book
+        </class>
+        <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Movie
+        </class>
+        <class>com.hello.jpabook_ch10_objected_query._01_objected_query.Category
+        </class>
+        <class>com.hello.jpabook_ch10_objected_query._01_objected_query.CategoryItem
+        </class>
         <properties>
             <!-- 필수 속성 -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
