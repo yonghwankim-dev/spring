@@ -1,0 +1,48 @@
+<!-- debug="true" : Logback 설정 처리과정 디버깅 방법1, -->
+<!-- scan="true" : 일정 시간마다 설정 파일 변경사항 재로딩 -->
+<!-- scanPeriod="15 seconds" : 15초 간격으로 스캔 수행 -->
+<configuration debug="true" scan="true" scanPeriod="15 seconds">
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/> <!-- Logback 설정 처리과정 디버깅 방법2-->
+    <property name="LOG_DIR" value="/var/log/application"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - ㅅ%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>tests.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <property name="LOG_FILE" value="LogFile"/>
+    <property name="LOG_DIR" value="/var/logs/application"/>
+    <appender name="FILE2" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_FILE}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/%d{yyyy/MM}/${LOG_FILE}.gz</fileNamePattern>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 로거 설정, 레벨은 INFO 레벨로 설정, com.baeldung.logback 패키지 포함 아래는 INFO 레벨로 로깅 -->
+    <logger name="com.baeldung.logback" level="INFO"/>
+    <logger name="com.baeldung.logback.tests" level="WARN" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="com.baeldung.logback.tests2" level="INFO">
+        <appender-ref ref="FILE2"/>
+    </logger>
+
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

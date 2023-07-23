@@ -423,9 +423,9 @@ class MemberTest {
 	public void test19() {
 		// given
 		String teamName = "팀1";
+		String jpql = "SELECT m FROM Member m INNER JOIN m.team t WHERE t.name = :teamName";
 		// when
-		List<Member> members = em.createQuery("SELECT m FROM Member m INNER JOIN m.team t WHERE t.name = :teamName",
-				Member.class)
+		List<Member> members = em.createQuery(jpql, Member.class)
 			.setParameter("teamName", teamName)
 			.getResultList();
 		// then
@@ -441,9 +441,9 @@ class MemberTest {
 	public void test20() {
 		// given
 		String teamName = "팀1";
+		String jpql = "SELECT m FROM Member m LEFT JOIN m.team t WHERE t.name = :teamName";
 		// when
-		List<Member> members = em.createQuery("SELECT m FROM Member m LEFT JOIN m.team t WHERE t.name = :teamName",
-				Member.class)
+		List<Member> members = em.createQuery(jpql, Member.class)
 			.setParameter("teamName", teamName)
 			.getResultList();
 		// then
@@ -497,10 +497,9 @@ class MemberTest {
 	@DisplayName("JOIN ON 절")
 	public void test23() {
 		// given
-
+		String jpql = "SELECT m, t FROM Member m LEFT JOIN m.team t ON t.name = '팀1'";
 		// when
-		List<Object[]> resultList = em.createQuery("SELECT m, t FROM Member m LEFT JOIN m.team t ON t.name = '팀1'")
-			.getResultList();
+		List<Object[]> resultList = em.createQuery(jpql).getResultList();
 		// then
 		resultList.forEach(row -> {
 			Member member = (Member)row[0];
