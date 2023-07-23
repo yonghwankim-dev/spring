@@ -748,10 +748,10 @@ For this, we have RollingFileAppender:
 ```
 <property name="LOG_FILE" value="LogFile" />
 <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-<file>${LOG_FILE}.log</file>
-<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-<!-- daily rollover -->
-<fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+    <file>${LOG_FILE}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- daily rollover -->
+        <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
 
         <!-- keep 30 days' worth of history capped at 3GB total size -->
         <maxHistory>30</maxHistory>
@@ -760,7 +760,6 @@ For this, we have RollingFileAppender:
     <encoder>
         <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
     </encoder>
-
 </appender>
 ```
 
@@ -909,5 +908,6 @@ As usual, code snippets can be found over on GitHub.
 
 ## References
 
+> source code : [source code](/스프링_라이브러리_데모/springboot_practice-main/spring_demo/src/main/java/com/baeldung/logback/)
 > [A Guide To Logback](https://www.baeldung.com/logback)
 
