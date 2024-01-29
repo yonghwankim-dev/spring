@@ -41,6 +41,23 @@ dependencies {
     implementation 'com.google.firebase:firebase-admin:9.1.1'
 }
 
+task copyPrivate(type: Copy) {
+    copy {
+        from './secret'
+        include "*.json"
+        into 'src/main/resources/secret'
+    }
+}
+
+springBoot{
+    mainClass = "nemo.SpringDemoApplication"
+}
+
+bootJar {
+    archiveFileName = "spring_demo.jar"
+    copyPrivate
+}
+
 tasks.named('bootBuildImage') {
     builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
