@@ -45,7 +45,7 @@ task copyPrivate(type: Copy) {
     copy {
         from './secret'
         include "*.json"
-        into 'src/main/resources/secret'
+        into 'src/main/resources/secret/firebase'
     }
 }
 
