@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+
+<div class="container-fluid" layout:fragment="content">
+    <div class="wrap_reserve">
+        <h2 class="hidden">예매하기</h2>
+        <div th:replace="ticket/personSeatHeader"/>
+
+        <div id="reserveStep03" class="section_step_con step03 active">
+            <h3 class="hidden">결제</h3>
+            <div class="article article_sum_infor">
+                <div class="group_top">
+                    <h4 class="tit">예매정보</h4>
+                </div>
+                <div class="inner">
+                    <div class="movie_infor">
+                        <span class="thm">
+                                <img src="https://caching.lottecinema.co.kr//Media/MovieFile/MovieImg/202211/18944_104_1.jpg" alt="블랙 팬서: 와칸다 포에버">
+                        </span>
+                        <strong class="tit"><span class="ic_grade gr_12"></span>블랙 팬서: 와칸다 포에버(디지털)</strong>
+                        <dl class="dlist_infor" style="margin-top: 15px;">
+                            <dt>일시</dt>
+                            <dd><strong>2022-11-12 (토) 23:00 ~ 25:51</strong></dd>
+                            <dt>영화관</dt>
+                            <dd>가산디지털 6관 - 2D</dd>
+                            <dt>인원</dt>
+                            <dd>성인1</dd>
+                        </dl>
+                    </div>
+                    <div class="seat_infor">
+                        <dl class="dlist_infor">
+                            <dt>좌석</dt>
+                            <dd>K18</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="article article_pay_method">
+                <div class="group_top">
+                    <h4 class="tit">예매정보</h4>
+                </div>
+                <div class="inner">
+                    <div class="group_payment">
+                        <h5 class="tit_payment">최종결제수단</h5>
+                        <div class="bx_cate">
+                            <ul class="list_pay_item">
+                                <li><button type="button" class="cate1">신용카드</button></li>
+                                <li><button type="button" class="cate1">내통장결제</button></li>
+                                <li><button type="button" class="cate1">휴대폰</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article article_payment">
+                <div class="group_top">
+                    <h4 class="tit">결제하기</h4>
+                </div>
+                <div class="inner">
+                    <div class="payment_sum_wrap">
+                        <dl>
+                            <dt>상품금액</dt>
+                            <dd>14,000원</dd>
+                        </dl>
+                        <dl>
+                            <dt>결제금액</dt>
+                            <dd>총 14,000원</dd>
+                        </dl>
+                        <a th:href="@{/ticket/depth4}" class="btn_confirm">결제하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+    </script>
+</th:block>
+

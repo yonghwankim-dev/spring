@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div id="myPage_top_menu" th:fragment="top_menu">
+    <div class="tab_wrap">
+        <ul>
+            <li class="tab_list">
+                <a th:href="@{/myPage/myPay/ticketingOrderList}" class="tab_btn">결제내역</a>
+                <ul>
+                    <li class="tab_content_list">
+                        <a th:href="@{/myPage/myPay/ticketingOrderList}" class="tab_content">예매내역</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="tab_list">
+                <a th:href="@{/myPage/myInfo/myInfoList}" class="tab_btn">MY 정보 관리</a>
+                <ul>
+                    <li class="tab_content_list">
+                        <a th:href="@{/myPage/myInfo/myInfoList}" class="tab_content" style="left: 40px;">회원정보관리</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            activeMainMenuTab().then(activeSubMenuTab);
+        });
+
+        function activeMainMenuTab(){
+            return new Promise((resolve)=>{
+                const mainMenuTabNumber = "[[${mTab}]]";
+                $($(".tab_list")[mainMenuTabNumber]).addClass("active");
+                resolve();
+            });
+        }
+
+        function activeSubMenuTab(){
+            return new Promise((resolve)=>{
+                const subMenuTabNumber = "[[${sTab}]]";
+                $($(".tab_list.active .tab_content_list")[subMenuTabNumber]).addClass("active");
+                resolve();
+            });
+        }
+    </script>
+</div>

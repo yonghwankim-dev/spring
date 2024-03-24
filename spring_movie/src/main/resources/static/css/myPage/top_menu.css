@@ -1,0 +1,46 @@
+#myPage_top_menu{
+    margin-bottom: 75px;
+}
+.tab_wrap > ul > li{
+    display: inline-block;
+}
+
+.tab_wrap .tab_list.active .tab_btn{
+    border-bottom: 2px solid #000000;
+}
+
+.tab_wrap .tab_btn{
+    display: inline-block;
+    width: 125px;
+    height: 45px;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    line-height: 50px;
+    font-family: "Noto Sans KR", Roboto, dotum, "sans-serif";
+    text-align: center;
+}
+
+.tab_wrap .tab_content{
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    padding: 0 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+    line-height: 30px;
+    height: 0px;
+    font-family: "Noto Sans KR", Roboto, dotum, "sans-serif";
+}
+
+.tab_wrap ul > li.active > ul > li > .tab_content{
+    height: 30px;
+    line-height: 30px;
+    color: #7F7F7F;
+}
+
+.tab_wrap ul > li > ul > li.active > .tab_content{
+    color: black;
+}
+

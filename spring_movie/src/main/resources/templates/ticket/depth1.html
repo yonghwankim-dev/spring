@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+
+<div class="container-fluid" layout:fragment="content">
+    <div class="wrap_reserve">
+        <h2 class="hidden">예매하기</h2>
+
+        <div th:replace="ticket/personSeatHeader"/>
+
+        <div id="reserveStep01" class="section_step_con step01 active">
+            <h3 class="hidden">상영시간</h3>
+            <div class="article article_cinema area__movingbar litype2">
+                <div class="group_top">
+                    <h4 class="tit">영화관</h4>
+                </div>
+                <div class="inner">
+                    <ul class="tab_wrap outer actionmovingbar">
+                        <li class="active">
+                            <button type="button" class="tab_tit" style="width: 100%; left: 0%;">
+                                <span>전체</span>
+                            </button>
+                            <div class="tab_con">
+                                <h5 class="hidden">전체</h5>
+                                <div class="cinema_select_wrap cinemaSelect basicCinema">
+                                    <ul>
+                                        <th:block th:each="cinemaLocation, status : ${cinemaLocations}">
+                                            <li class="depth1" th:classappend="${selectedLocation eq cinemaLocation.location ? ' active' : ''}">
+                                                <a href="#none" title="선택됨" th:text="${cinemaLocation.location}"><em th:text="${'('+cinemaLocation.count+')'}"></em></a>
+                                                <div class="depth2">
+                                                    <ul>
+                                                        <th:block th:each="cinema : ${cinemas}">
+                                                            <li th:if="${cinema.location eq cinemaLocation.location}"
+                                                                    th:class="${not cinemasOnScreen.contains(cinema) ? 'disabled' : ''}"
+                                                                     th:classappend="${selectedCinemaId eq cinema.id ? 'active' : ''}">
+                                                                <a th:href="@{/ticket/depth1(selectedLocation=${cinemaLocation.location},
+                                                                                             selectedCinemaId=${cinema.id})}" th:text="${cinema.name}"></a>
+                                                            </li>
+                                                        </th:block>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="wrap_nav_underline">
+                            <span class="nav_underline"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="article article_movie">
+                <div class="group_top">
+                    <h4 class="tit movie_name">영화 선택</h4>
+                </div>
+                <div class="inner">
+                    <div class="list_filter"></div>
+                    <div class="movie_select_wrap list movieSelect" style="height: 754px;">
+                        <ul style="overflow: auto; overflow-y: scroll; height: 754px;">
+                            <th:block th:each="movie : ${movies}">
+                                <li th:class="${not moviesOnScreen.contains(movie) ? 'disabled' : ''}"
+                                        th:classappend="${movie.id == selectedMovieId ? 'active' : ''}">
+                                    <a th:href="@{/ticket/depth1(selectedLocation=${selectedLocation},
+                                                                 selectedCinemaId=${moviesOnScreen.contains(movie) ? selectedCinemaId : ''},
+                                                                 selectedMovieId=${movie.id})}">
+                                        <div class="bx_thm"><span class="rank"><span class="hidden">순위</span><strong>1</strong></span><img
+                                                alt="포스터"
+                                                src="https://caching.lottecinema.co.kr//Media/MovieFile/MovieImg/202211/18944_101_1.jpg"></div>
+                                        <div class="group_infor">
+                                            <div class="bx_tit">
+                                                <span class="ic_grade" th:classappend="'gr_' + ${movie.filmRating}" th:text="${movie.filmRating} + '세 관람가'"></span>
+                                                <strong class="tit" th:text="${movie.name}"></strong></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="article article_time area__movingbar litype6">
+                <div class="group_top">
+                    <h4 class="tit">2022-11-09(오늘)</h4>
+                </div>
+                <div class="inner">
+                    <div class="date_select_wrap dateReserveWrap">
+                        <div class="slide_wrap slide_reserve_date">
+                            <ul class="owl-carousel owl-loaded owl-drag">
+                                <div class="owl-stage-outer">
+                                    <div class="owl-stage"
+                                         style="transform: translate3d(0px, 0px, 0px); transition: all 0.6s ease 0s; width: 1470px;">
+                                        <th:block th:each="date, dateStatus : ${localDateList}">
+                                            <div class="owl-item" th:classappend="${dateStatus.count <= 7 ? 'active' : ''}" style="width: 52.5px;">
+                                                <li class="item">
+                                                    <strong th:if="${dateStatus.first or date.getDayOfMonth() == 1}"
+                                                            class="month" th:text="${date.getMonth().value + '월'}"></strong>
+                                                    <span class="date">
+                                                        <label>
+                                                            <input th:checked="${date.dayOfMonth == selectedStartDate.dayOfMonth}" data-displayyn="Y"
+                                                                   data-isplaydate="Y"
+                                                                   th:data-playdate="${date}"
+                                                                   name="radioDate1"
+                                                                   type="radio">
+                                                            <strong th:text="${date.getDayOfMonth()}"></strong>
+                                                            <em th:text="${dateStatus.first ? '오늘' : #temporals.dayOfWeekNameShort(date)}">오늘</em>
+                                                        </label>
+                                                    </span>
+                                                </li>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <div class="owl-nav">
+                                    <button id="owl-prev-btn" class="owl-prev disabled" role="presentation" type="button">
+                                        <span aria-label="Previous">‹</span>
+                                    </button>
+                                    <button id="owl-next-btn" class="owl-next" role="presentation" type="button">
+                                        <span aria-label="Next">›</span>
+                                    </button>
+                                </div>
+                                <div class="owl-dots disabled"></div>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <ul class="tab_wrap outer sm1 actionmovingbar">
+                        <li class="active">
+                            <button type="button" class="tab_tit" style="width: 100%; left: 0%;"><span>전체</span></button>
+                            <div class="tab_con ty5" style="overflow: auto; overflow-y: scroll; height: 665px;">
+                                <h5 class="hidden">전체</h5>
+                                <div style="height: 658px; padding: 0 20px;">
+                                    <th:block th:each="movie : ${movieOnScreenMap.keySet()}">
+                                        <div th:if="${movieOnScreenMap.get(movie).size() > 0}" class="group_time_select">
+                                            <div class="time_select_tit">
+                                                <span class="ic_grade"
+                                                      th:classappend="${'gr_' + movie.filmRating}"
+                                                      th:text="${movie.filmRating}"/>
+                                                <strong th:text="${movie.name}"/>
+                                            </div>
+                                            <div class="time_select_wrap timeSelect">
+                                                <ul class="list_hall">
+                                                    <li>2D</li>
+                                                </ul>
+                                                <ul class="list_time">
+                                                    <th:block th:each="screen : ${movieOnScreenMap.get(movie)}">
+                                                        <li>
+                                                            <a th:href="@{/ticket/depth2(screenId=${screen.id})}">
+                                                                <dl>
+                                                                    <dt>상영시간</dt>
+                                                                    <dd class="time">
+                                                                        <strong th:text="${#temporals.format(screen.startDateTime, 'HH:mm')}"/>
+                                                                        <div class="tooltip" th:text="${'종료 ' + #temporals.format(screen.startDateTime.plusMinutes(movie.runtime), 'HH:mm')}"/>
+                                                                    </dd>
+                                                                    <dt>잔여석</dt>
+                                                                    <dd class="seat">
+                                                                        <strong th:text="${screen.screenSeats.size()}"/> / [[${screen.screenSeats.size()}]]</dd>
+                                                                    <dt>상영관</dt>
+                                                                    <dd class="hall" th:text="${screen.theater.name}"></dd>
+                                                                </dl>
+                                                            </a>
+                                                        </li>
+                                                    </th:block>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </th:block>
+
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $(".depth1 > a").click(function () {
+                // 모든 depth1의 active 제거
+                $(".depth1").removeClass("active");
+
+                // 모든 depth2의 display:none 설정
+                $(".depth2").css("display", "none");
+
+                // 선택한 지역의 depth1에 active 설정
+                $(this).parent("li").addClass("active");
+
+                // 선택한 지역의 depth2의 display:block 설정
+                $(this).siblings().css("display", "block");
+            });
+
+            $(".movieSelect > ul > li > a").click(function(){
+                // 클릭한 버튼의 모든 li active 제거
+                $(".movieSelect > ul > li").removeClass("active");
+
+                // 클릭한 버튼의 li active 추가
+                $(this).parent("li").addClass("active");
+            });
+
+            $("#owl-prev-btn").click(function(){
+                // 왼쪽으로 이동
+                $(".owl-stage").css({"transform" : "translate3d(0px, 0px, 0px)"});
+                $("#owl-prev-btn").addClass("disabled");
+                $("#owl-next-btn").removeClass("disabled");
+            });
+
+            $("#owl-next-btn").click(function(){
+                // 오른쪽으로 이동
+                $(".owl-stage").css({"transform" : "translate3d(-315px, 0px, 0px)"});
+                $("#owl-prev-btn").removeClass("disabled");
+                $("#owl-next-btn").addClass("disabled");
+            });
+
+            $(".owl-item input").click(function(){
+                const selectedLocation = [[${selectedLocation}]];
+                const selectedCinemaId = [[${selectedCinemaId}]] == null ? "" : [[${selectedCinemaId}]];
+                const selectedMovieId = [[${selectedMovieId}]] == null ? "" : [[${selectedMovieId}]];
+                const startDate = $(this).data("playdate");
+
+                location.href = `/ticket/depth1?selectedLocation=${selectedLocation}&selectedCinemaId=${selectedCinemaId}&selectedMovieId=${selectedMovieId}&selectedStartDate=${startDate}`;
+            })
+        });
+    </script>
+</th:block>
+

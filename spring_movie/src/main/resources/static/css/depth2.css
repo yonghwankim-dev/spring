@@ -1,0 +1,283 @@
+/* 인원/좌석 - 인원 선택 시작*/
+.wrap_reserve .section_step_con.active {
+    display: block;
+    overflow: inherit;
+    position: relative;
+    width: 1202px;
+    height: 100%;
+    margin-left: 78px;
+}
+
+.wrap_reserve .section_step_con {
+    overflow: hidden;
+    position: absolute;
+    height: 0;
+}
+
+.wrap_reserve .section_step_con .article.article_seat {
+    width: 1202px;
+}
+
+.wrap_reserve .section_step_con .article {
+    position: relative;
+    float: left;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #FFF;
+}
+
+.wrap_reserve .section_step_con:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.select_num_people_wrap {
+    overflow: hidden;
+    height: 117px;
+    padding: 0 20px;
+    background-color: #FFF;
+}
+
+.select_num_people_wrap .movie_infor {
+    position: relative;
+    float: left;
+    width: 270px;
+    padding: 30px 0 0 54px;
+}
+
+
+
+.select_num_people_wrap .movie_infor .thm {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: 26px;
+    left: 0;
+    overflow: hidden;
+    width: 46px;
+    height: 65px;
+    border-radius: 4px;
+}
+
+.select_num_people_wrap .movie_infor .thm img {
+    width: 100%;
+}
+
+.select_num_people_wrap .movie_infor .group_infor .bx_tit {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.select_num_people_wrap .movie_infor .group_infor .bx_tit .ic_grade {
+    margin: -5px 4px 0 0;
+}
+
+.select_num_people_wrap .movie_infor .group_infor .bx_tit strong {
+    font-size: 17px;
+}
+
+.select_num_people_wrap .movie_infor .group_infor dl dt {
+    overflow: hidden;
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.select_num_people_wrap .movie_infor .group_infor dl dd.sub_info1 .time {
+    position: relative;
+    padding-left: 9px;
+    margin-left: 10px;
+}
+
+.select_num_people_wrap .movie_infor .group_infor dl dd.sub_info1 .time:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    width: 1px;
+    height: 10px;
+    background: #ddd;
+}
+
+.select_num_people_wrap .count_people {
+    float: right;
+    width: 825px;
+    margin-top: 36px;
+}
+
+.select_num_people_wrap .count_people > ul > li:first-child {
+    margin-left: 0;
+}
+
+.select_num_people_wrap .count_people > ul > li {
+    float: left;
+    margin-left: 20px;
+}
+
+.select_num_people_wrap .count_people > ul > li .tit {
+    margin-right: 8px;
+    font-size: 13px;
+}
+
+.select_num_people_wrap .count_people > ul > li .bx_num {
+    display: inline-block;
+    width: 100px;
+}
+
+/* 인원/좌석 - 인원 선택 종료*/
+
+/* 인원/좌석 - 좌석 선택 시작*/
+.select_seat_wrap{
+    height: 618px;
+    background-color: #000000;
+}
+
+.select_seat_wrap .top_txt_info{
+    text-align: center;
+    margin: 15px 0 25px;
+    padding: 20px;
+    height: 55px;
+}
+
+.select_seat_wrap .top_txt_info #ticketMessageInfo{
+    font-family: "Noto Sans KR", "Roboto";
+    font-size: 11px;
+    color: #FFFFFF;
+    height: 100%;
+
+}
+
+.select_seat_wrap .seat_wrap .seat_screen{
+    padding-top: 10px;
+    background-color: #6E6E6E;
+    text-align: center;
+    height: 35px;
+}
+
+.select_seat_wrap .seat_wrap .seat_screen span{
+    color: #FFFFFF;
+    font-size: 16px;
+    letter-spacing: 10px;
+    font-weight: bold;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area{
+    position: relative;
+    width: 525px;
+    height: 275px;
+    margin: 10px auto 0;
+}
+
+.select_seat_wrap .seat_wrap .showMap_wrap{
+    height: 395px;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area .seat_tit{
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 16px;
+    line-height: 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: "Roboto", "Noto Sans KR";
+    color: #FFFFFF;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area .sel{
+    position: absolute;
+    font-size: 10px;
+    outline-color: white;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area .sel > span{
+    position: relative;
+    display: block;
+    overflow : hidden;
+    width: 21px;
+    height: 16px;
+    line-height: 17px;
+    background: #E8E8E8;
+    color: #000;
+    text-align: center;
+    letter-spacing: -0.5px;
+    box-sizing: border-box;
+    border-radius: 7px 7px 2px 0px;
+    font-family: "Roboto", "Noto Sans KR";
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box{
+    padding-left: 45px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span{
+    font-family: "Noto Sans KR", "Roboto";
+    font-size: 12px;
+    color: #FFFFFF;
+    padding-left: 17px;
+    margin-left: 6px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type1{
+    background: url("../images/icon/ic_seat_type1.png") no-repeat 0 4px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type2{
+    background: url("../images/icon/ic_seat_type2.png") no-repeat 0 4px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type3{
+    background: url("../images/icon/ic_seat_type3.png") no-repeat 0 4px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type4{
+    background: url("../images/icon/ic_seat_type4.png") no-repeat 0 4px;
+}
+/* 인원/좌석 - 좌석 선택 종료*/
+
+/* 인원/좌석 - 인원 및 좌석요약 시작*/
+#PersonSeatSummery{
+    height: 65px;
+    background: #888888;
+}
+
+#PersonSeatSummery .select_seat_result{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+#PersonSeatSummery .select_seat_result .group_lft{
+    color: white;
+    padding-left: 20px;
+}
+
+#PersonSeatSummery .select_seat_result .group_lft span{
+    font-size: 15px;
+}
+
+#PersonSeatSummery .select_seat_result .group_lft span strong{
+    font-size: 25px;
+}
+
+#PersonSeatSummery .select_seat_result .group_rgt{
+}
+
+#PersonSeatSummery .select_seat_result .group_rgt #link_repay{
+    float: left;
+    width: 180px;
+    height: 65px;
+    line-height: 60px;
+    border-radius: 0;
+    border: none;
+    font-size: 15px;
+    background: red;
+    color: white;
+    text-align: center;
+}
+/* 인원/좌석 - 인원 및 좌석요약 종료*/
