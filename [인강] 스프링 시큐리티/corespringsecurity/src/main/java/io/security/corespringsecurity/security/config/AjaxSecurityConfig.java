@@ -45,12 +45,13 @@ public class AjaxSecurityConfig {
 			.securityMatcher("/api/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/api/messages").hasRole("MANAGER")
+				.requestMatchers("/api/login").permitAll()
 				.anyRequest().authenticated()
 			);
 		// http.authenticationProvider(authenticationProvider());
 		// http.authenticationManager(authenticationManager());
 		// http.addFilterBefore(ajaxLoginProcessingFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
-		http.csrf(AbstractHttpConfigurer::disable);
+		// http.csrf(AbstractHttpConfigurer::disable);
 		http.exceptionHandling(configurer->{
 			configurer.authenticationEntryPoint(ajaxLoginAuthenticationEntryPoint());
 			configurer.accessDeniedHandler(ajaxAccessDeniedHandler());

@@ -17,8 +17,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginController {
 
-	@GetMapping("/login")
-	public String login(@RequestParam(value = "error", required = false) String error,
+	@GetMapping(value = {"/login", "/api/login"})
+	public String login(
+		@RequestParam(value = "error", required = false) String error,
 		@RequestParam(value = "exception", required = false) String exception,
 		Model model) {
 		model.addAttribute("error", error);
@@ -35,8 +36,10 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
-	@GetMapping("/denied")
-	public String denied(@RequestParam(value = "exception", required = false) String exception, Model model) {
+	@GetMapping(value = {"/denied", "/api/denied"})
+	public String denied(
+		@RequestParam(value = "exception", required = false) String exception,
+		Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Account account = (Account)authentication.getPrincipal();
 		model.addAttribute("username", account.getUsername());
