@@ -31,6 +31,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 		if (!passwordEncoder.matches(password, accountContext.getAccount().getPassword())){
 			throw new BadCredentialsException("BadCredentialsException");
 		}
+		// return AjaxAuthenticationToken.authenticated(accountContext.getAccount(), null, accountContext.getAuthorities());
 		return new AjaxAuthenticationToken(accountContext.getAccount(), null, accountContext.getAuthorities());
 	}
 

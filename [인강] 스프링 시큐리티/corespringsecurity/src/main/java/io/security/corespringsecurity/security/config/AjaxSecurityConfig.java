@@ -6,13 +6,20 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,12 +32,12 @@ import io.security.corespringsecurity.security.provider.AjaxAuthenticationProvid
 import lombok.RequiredArgsConstructor;
 
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
-@Order(0)
+@Order(value = 0)
 public class AjaxSecurityConfig {
 
 	private final UserDetailsService userDetailsService;
-	private final PasswordEncoder passwordEncoder;
 	private final ObjectMapper objectMapper;
 
 	// Warning: SecurityConfig 클래스의 securityFilterChain 메서드와 메서드 명이 동일한 경우 해당 메서드는 호출되지 않음
@@ -39,6 +46,7 @@ public class AjaxSecurityConfig {
 		http
 			.securityMatcher("/api/**")
 			.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers("/api/messages").hasRole("MANAGER")
 				.anyRequest().authenticated()
 			);
 		http.authenticationProvider(authenticationProvider());
@@ -75,9 +83,16 @@ public class AjaxSecurityConfig {
 	@Bean
 	protected AjaxLoginProcessingFilter ajaxLoginProcessingFilter(AuthenticationManager authenticationManager){
 		AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter(authenticationManager);
+		ajaxLoginProcessingFilter.setSecurityContextRepository(securityContextRepository());
 		ajaxLoginProcessingFilter.setAuthenticationSuccessHandler(ajaxAuthenticationSuccessHandler());
 		ajaxLoginProcessingFilter.setAuthenticationFailureHandler(ajaxAuthenticationFailureHandler());
 		return ajaxLoginProcessingFilter;
+	}
+
+	@Bean
+	protected SecurityContextRepository securityContextRepository(){
+		return new DelegatingSecurityContextRepository(new HttpSessionSecurityContextRepository(),
+			new RequestAttributeSecurityContextRepository());
 	}
 
 	@Bean
@@ -87,6 +102,11 @@ public class AjaxSecurityConfig {
 
 	@Bean
 	protected AuthenticationProvider authenticationProvider(){
-		return new AjaxAuthenticationProvider(userDetailsService, passwordEncoder);
+		return new AjaxAuthenticationProvider(userDetailsService, passwordEncoder());
+	}
+
+	@Bean
+	protected PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 }

@@ -12,8 +12,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.security.corespringsecurity.domain.Account;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
