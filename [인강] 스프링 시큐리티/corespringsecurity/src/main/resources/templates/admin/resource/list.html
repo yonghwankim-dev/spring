@@ -24,14 +24,14 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr class="link_btn hover" th:each="resource : ${resources}">
+				<tr class="link_btn hover" th:each="resources : ${resources}">
 
 					<td style="text-align: left;">
-						<a th:href="@{'/admin/resources/' + ${resource.id}}"><span th:text="${resource.resourceName}">회원</span></a>
+						<a th:href="@{'/admin/resources/' + ${resources.id}}"><span th:text="${resources.resourceName}">회원</span></a>
 					</td>
-					<td style="text-align: left;" th:text="${resource.resourceType}"></td>
-					<td style="text-align: left;" th:text="${resource.httpMethod}"></td>
-					<td style="text-align: left;" th:text="${resource.orderNum}"></td>
+					<td style="text-align: left;" th:text="${resources.resourceType}"></td>
+					<td style="text-align: left;" th:text="${resources.httpMethod}"></td>
+					<td style="text-align: left;" th:text="${resources.orderNum}"></td>
 				</tr>
 				</tbody>
 			</table>

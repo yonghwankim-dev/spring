@@ -4,21 +4,20 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatchers;
 
+import io.security.corespringsecurity.security.authorization_manager.UrlAuthorizationManager;
+import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.handler.CustomAccessDeniedHandler;
 import io.security.corespringsecurity.security.handler.CustomAuthenticationFailureHandler;
 import io.security.corespringsecurity.security.handler.CustomAuthenticationHandler;
+import io.security.corespringsecurity.security.service.SecurityResourceService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -28,13 +27,13 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig{
 
 	private final AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
+	private final SecurityResourceService securityResourceService;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/", "/users", "user/login/**", "/login*", "/error").permitAll()
-				.requestMatchers("/mypage").hasRole("USER")
 				.requestMatchers("/messages").hasRole("MANAGER")
 				.requestMatchers("/config").hasRole("ADMIN")
 				.anyRequest().authenticated());
@@ -50,21 +49,22 @@ public class SecurityConfig{
 			);
 		http.exceptionHandling(configurer->
 			configurer.accessDeniedHandler(customAccessDeniedHandler()));
+
 		return http.build();
 	}
 
 	@Bean
-	protected CustomAuthenticationHandler customAuthenticationHandler(){
+	public CustomAuthenticationHandler customAuthenticationHandler(){
 		return new CustomAuthenticationHandler();
 	}
 
 	@Bean
-	protected CustomAuthenticationFailureHandler customAuthenticationFailureHandler(){
+	public CustomAuthenticationFailureHandler customAuthenticationFailureHandler(){
 		return new CustomAuthenticationFailureHandler();
 	}
 
 	@Bean
-	protected CustomAccessDeniedHandler customAccessDeniedHandler(){
+	public CustomAccessDeniedHandler customAccessDeniedHandler(){
 		return new CustomAccessDeniedHandler("/denied");
 	}
 
@@ -73,4 +73,20 @@ public class SecurityConfig{
 		return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 
+	@Bean
+	public UrlAuthorizationManager authorizationManager() {
+		return new UrlAuthorizationManager(urlResourcesMapFactoryBean().getObject(), securityResourceService, roleHierarchyImpl());
+	}
+
+	@Bean
+	public UrlResourcesMapFactoryBean urlResourcesMapFactoryBean() {
+		UrlResourcesMapFactoryBean urlResourcesMapFactoryBean = new UrlResourcesMapFactoryBean();
+		urlResourcesMapFactoryBean.setSecurityResourceService(securityResourceService);
+		return urlResourcesMapFactoryBean;
+	}
+
+	@Bean
+	public RoleHierarchyImpl roleHierarchyImpl(){
+		return new RoleHierarchyImpl();
+	}
 }

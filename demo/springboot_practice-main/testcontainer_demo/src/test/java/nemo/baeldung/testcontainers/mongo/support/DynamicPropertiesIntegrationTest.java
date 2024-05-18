@@ -1,4 +1,4 @@
-package nemo.baeldung.testcontainers.support;
+package nemo.baeldung.testcontainers.mongo.support;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.*;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

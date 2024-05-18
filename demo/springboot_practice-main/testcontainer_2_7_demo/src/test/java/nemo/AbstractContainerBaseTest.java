@@ -16,32 +16,19 @@ import io.restassured.RestAssured;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 public class AbstractContainerBaseTest {
-	private static final String MYSQL_IMAGE = "mysql:8.0.33";
-	private static final int MYSQL_PORT = 3306;
 	private static final String REDIS_IMAGE = "redis:7-alpine";
 	private static final int REDIS_PORT = 6379;
-
-	private static final GenericContainer MYSQL_CONTAINER = new GenericContainer(MYSQL_IMAGE)
-		.withExposedPorts(MYSQL_PORT)
-		.withEnv("MYSQL_ROOT_PASSWORD", "password1234!")
-		.withReuse(true);
 
 	private static final GenericContainer REDIS_CONTAINER = new GenericContainer(REDIS_IMAGE)
 		.withExposedPorts(REDIS_PORT)
 		.withReuse(true);
 
 	static {
-		MYSQL_CONTAINER.start();
 		REDIS_CONTAINER.start();
 	}
 
 	@LocalServerPort
-	int port;
-
-	@BeforeEach
-	void setUp(){
-		RestAssured.port = port;
-	}
+	protected int port;
 
 	@DynamicPropertySource
 	public static void overrideProps(DynamicPropertyRegistry registry) {
@@ -54,5 +41,10 @@ public class AbstractContainerBaseTest {
 		registry.add("spring.datasource.url", () -> "jdbc:tc:mysql:8.0.33://localhost/testdb");
 		registry.add("spring.datasource.username", () -> "admin");
 		registry.add("spring.datasource.password", () -> "password1234!");
+	}
+
+	@BeforeEach
+	void setup(){
+		RestAssured.port = port;
 	}
 }

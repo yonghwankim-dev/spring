@@ -17,11 +17,6 @@ public class MemberRestController {
 
     private final MemberRepository repository;
 
-    @PostMapping
-    public Member save(@RequestBody MemberCreateRequest request) {
-        return repository.save(request.toEntity());
-    }
-
     @GetMapping
     public List<Member> findAll() {
         return repository.findAll();

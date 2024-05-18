@@ -1,4 +1,4 @@
-package nemo.baeldung.testcontainers.support;
+package nemo.baeldung.testcontainers.mongo.support;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package nemo.baeldung.testcontainers.support;
+package nemo.baeldung.testcontainers.mongo.support;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;

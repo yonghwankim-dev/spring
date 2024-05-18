@@ -1,4 +1,4 @@
-package nemo.baeldung.testcontainers.reuse;
+package nemo.baeldung.testcontainers.mongo.reuse;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.devtools.restart.RestartScope;
