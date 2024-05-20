@@ -4,7 +4,6 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
+import io.security.corespringsecurity.security.authorization_manager.IpAddressAuthorizationManager;
+import io.security.corespringsecurity.security.authorization_manager.UnanimousBasedAuthorizationManager;
 import io.security.corespringsecurity.security.authorization_manager.UrlAuthorizationManager;
 import io.security.corespringsecurity.security.factory.UrlResourcesMapFactoryBean;
 import io.security.corespringsecurity.security.handler.CustomAccessDeniedHandler;
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 @Order(value = 1)
-public class SecurityConfig{
+public class SecurityConfig {
 
 	private final AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 	private final SecurityResourceService securityResourceService;
@@ -34,48 +35,41 @@ public class SecurityConfig{
 		http
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/", "/users", "user/login/**", "/login*", "/error").permitAll()
-				.requestMatchers("/messages").hasRole("MANAGER")
-				.requestMatchers("/config").hasRole("ADMIN")
-				.anyRequest().authenticated());
+				.anyRequest().access(unanimousBasedAuthorizationManager()));
 		http
 			.formLogin(configurer ->
 				configurer.loginPage("/login")
-							.loginProcessingUrl("/login_proc")
-							.defaultSuccessUrl("/")
-							.authenticationDetailsSource(authenticationDetailsSource)
-							.successHandler(customAuthenticationHandler())
-							.failureHandler(customAuthenticationFailureHandler())
-							.permitAll()
+					.loginProcessingUrl("/login_proc")
+					.defaultSuccessUrl("/")
+					.authenticationDetailsSource(authenticationDetailsSource)
+					.successHandler(customAuthenticationHandler())
+					.failureHandler(customAuthenticationFailureHandler())
+					.permitAll()
 			);
-		http.exceptionHandling(configurer->
+		http.exceptionHandling(configurer ->
 			configurer.accessDeniedHandler(customAccessDeniedHandler()));
 
 		return http.build();
 	}
 
 	@Bean
-	public CustomAuthenticationHandler customAuthenticationHandler(){
+	public CustomAuthenticationHandler customAuthenticationHandler() {
 		return new CustomAuthenticationHandler();
 	}
 
 	@Bean
-	public CustomAuthenticationFailureHandler customAuthenticationFailureHandler(){
+	public CustomAuthenticationFailureHandler customAuthenticationFailureHandler() {
 		return new CustomAuthenticationFailureHandler();
 	}
 
 	@Bean
-	public CustomAccessDeniedHandler customAccessDeniedHandler(){
+	public CustomAccessDeniedHandler customAccessDeniedHandler() {
 		return new CustomAccessDeniedHandler("/denied");
 	}
 
 	@Bean
-	public WebSecurityCustomizer webSecurity(){
+	public WebSecurityCustomizer webSecurity() {
 		return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-	}
-
-	@Bean
-	public UrlAuthorizationManager authorizationManager() {
-		return new UrlAuthorizationManager(urlResourcesMapFactoryBean().getObject(), securityResourceService, roleHierarchyImpl());
 	}
 
 	@Bean
@@ -86,7 +80,23 @@ public class SecurityConfig{
 	}
 
 	@Bean
-	public RoleHierarchyImpl roleHierarchyImpl(){
+	public UrlAuthorizationManager urlAuthorizationManager() {
+		return new UrlAuthorizationManager(urlResourcesMapFactoryBean().getObject(), securityResourceService,
+			roleHierarchyImpl());
+	}
+
+	@Bean
+	public RoleHierarchyImpl roleHierarchyImpl() {
 		return new RoleHierarchyImpl();
+	}
+
+	@Bean
+	public IpAddressAuthorizationManager ipAddressAuthorizationManager() {
+		return new IpAddressAuthorizationManager(securityResourceService);
+	}
+
+	@Bean
+	public UnanimousBasedAuthorizationManager unanimousBasedAuthorizationManager() {
+		return new UnanimousBasedAuthorizationManager(ipAddressAuthorizationManager(), urlAuthorizationManager());
 	}
 }

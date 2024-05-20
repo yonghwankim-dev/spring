@@ -17,16 +17,16 @@ public class RoleHierarchyServiceImpl implements RoleHierarchyService {
 
 	private final RoleHierarchyRepository roleHierarchyRepository;
 
-	@Transactional(readOnly = true)
 	@Override
+	@Transactional(readOnly = true)
 	public String findAllHierarchy() {
 		List<RoleHierarchy> rolesHierarchy = roleHierarchyRepository.findAll();
 
 		Iterator<RoleHierarchy> itr = rolesHierarchy.iterator();
 		StringBuilder concatRoles = new StringBuilder();
-		while (itr.hasNext()){
+		while (itr.hasNext()) {
 			RoleHierarchy roleHierarchy = itr.next();
-			if (roleHierarchy.getParentName() != null){
+			if (roleHierarchy.getParentName() != null) {
 				concatRoles.append(roleHierarchy.getParentName().getChildName());
 				concatRoles.append(" > ");
 				concatRoles.append(roleHierarchy.getChildName());

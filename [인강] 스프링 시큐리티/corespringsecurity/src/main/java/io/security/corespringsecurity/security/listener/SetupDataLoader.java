@@ -1,6 +1,5 @@
 package io.security.corespringsecurity.security.listener;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -11,20 +10,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.security.corespringsecurity.domain.entity.AccessIp;
 import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.domain.entity.AccountRole;
 import io.security.corespringsecurity.domain.entity.Resources;
 import io.security.corespringsecurity.domain.entity.ResourcesRole;
 import io.security.corespringsecurity.domain.entity.Role;
 import io.security.corespringsecurity.domain.entity.RoleHierarchy;
+import io.security.corespringsecurity.repository.AccessIpRepository;
 import io.security.corespringsecurity.repository.ResourcesRepository;
 import io.security.corespringsecurity.repository.RoleHierarchyRepository;
 import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.repository.UserRepository;
+import io.security.corespringsecurity.security.authorization_manager.UrlAuthorizationManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private boolean alreadySetup = false;
@@ -33,6 +37,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	private final ResourcesRepository resourcesRepository;
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final AccessIpRepository accessIpRepository;
+	private final UrlAuthorizationManager urlAuthorizationManager;
 
 	private static AtomicInteger count = new AtomicInteger(0);
 
@@ -44,25 +50,28 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		}
 
 		setupSecurityResources();
+		setupAccessIpData();
 
 		alreadySetup = true;
 	}
 
 	@Transactional
 	public void setupSecurityResources() {
-		Set<Role> roles = new HashSet<>();
 		Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
-		roles.add(adminRole);
-		createResourceIfNotFound("/admin/**", "", roles, "url");
-		createUserIfNotFound("admin@gmail.com", "admin@admin.com", "pass", roles);
-		Role managerRole = createRoleIfNotFound("ROLE_MANAGER", "매니저");
-		roles.add(managerRole);
-		Role userRole = createRoleIfNotFound("ROLE_USER", "유저");
-		createResourceIfNotFound("/mypage", "", Set.of(userRole), "url");
+		createResourceIfNotFound("/admin/**", "", Set.of(adminRole), "url");
+		createResourceIfNotFound("/config", "", Set.of(adminRole), "url");
+		createUserIfNotFound("admin@gmail.com", "admin@admin.com", "pass", Set.of(adminRole));
 
+		Role managerRole = createRoleIfNotFound("ROLE_MANAGER", "매니저");
+		createResourceIfNotFound("/messages/**", "", Set.of(managerRole), "url");
+
+		Role userRole = createRoleIfNotFound("ROLE_USER", "유저");
+		Resources myPageResource = createResourceIfNotFound("/mypage", "", Set.of(userRole), "url");
 
 		createRoleHierarchyIfNotFound(managerRole, adminRole);
 		createRoleHierarchyIfNotFound(userRole, managerRole);
+
+		urlAuthorizationManager.reload();
 	}
 
 	@Transactional
@@ -75,7 +84,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	}
 
 	@Transactional
-	public Resources createResourceIfNotFound(String resourceName, String httpMethod, Set<Role> roleSet, String resourceType) {
+	public Resources createResourceIfNotFound(String resourceName, String httpMethod, Set<Role> roleSet,
+		String resourceType) {
 		Resources resources = resourcesRepository.findByResourceNameAndHttpMethod(resourceName,
 			httpMethod);
 
@@ -106,20 +116,28 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	}
 
 	@Transactional
-	public void createRoleHierarchyIfNotFound(Role childRole, Role parentRole){
+	public void createRoleHierarchyIfNotFound(Role childRole, Role parentRole) {
 		RoleHierarchy roleHierarchy = roleHierarchyRepository.findByChildName(parentRole.getRoleName());
-		if (roleHierarchy == null){
+		if (roleHierarchy == null) {
 			roleHierarchy = RoleHierarchy.createRoleHierarchy(parentRole.getRoleName());
 		}
 		RoleHierarchy parentRoleHierarchy = roleHierarchyRepository.save(roleHierarchy);
 
 		roleHierarchy = roleHierarchyRepository.findByChildName(childRole.getRoleName());
-		if (roleHierarchy == null){
+		if (roleHierarchy == null) {
 			roleHierarchy = RoleHierarchy.createRoleHierarchy(childRole.getRoleName());
 		}
 
 		RoleHierarchy childRoleHierarchy = roleHierarchyRepository.save(roleHierarchy);
 
 		childRoleHierarchy.setParentName(parentRoleHierarchy);
+	}
+
+	private void setupAccessIpData() {
+		AccessIp byIpAddress = accessIpRepository.findByIpAddress("0:0:0:0:0:0:0:1");
+		if (byIpAddress == null) {
+			AccessIp accessIp = AccessIp.create("0:0:0:0:0:0:0:1");
+			accessIpRepository.save(accessIp);
+		}
 	}
 }

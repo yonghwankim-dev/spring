@@ -17,10 +17,13 @@ import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
+
 	public AjaxLoginProcessingFilter(AuthenticationManager authenticationManager) {
 		super(new AntPathRequestMatcher("/api/login"), authenticationManager);
 	}
@@ -30,22 +33,28 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 		AuthenticationException,
 		IOException,
 		ServletException {
-		if (!isAjax(request)){
+		if (!isAjax(request)) {
 			throw new IllegalStateException("Authentication is not supported");
 		}
 
 		AccountDto accountDto = objectMapper.readValue(request.getReader(), AccountDto.class);
-		if (StringUtils.isEmpty(accountDto.getUsername()) || StringUtils.isEmpty(accountDto.getPassword())){
+		if (StringUtils.isEmpty(accountDto.getUsername()) || StringUtils.isEmpty(accountDto.getPassword())) {
 			throw new IllegalArgumentException("Username or Password is empty");
 		}
 
-		AbstractAuthenticationToken ajaxAuthenticationToken = new AjaxAuthenticationToken(accountDto.getUsername(),
+		AbstractAuthenticationToken authRequest = new AjaxAuthenticationToken(accountDto.getUsername(),
 			accountDto.getPassword());
 
-		return getAuthenticationManager().authenticate(ajaxAuthenticationToken);
+		setDetails(request, authRequest);
+		log.info("details : {}", authRequest.getDetails());
+		return getAuthenticationManager().authenticate(authRequest);
 	}
 
 	private boolean isAjax(HttpServletRequest request) {
 		return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+	}
+
+	private void setDetails(HttpServletRequest request, AbstractAuthenticationToken authRequest) {
+		authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
 	}
 }

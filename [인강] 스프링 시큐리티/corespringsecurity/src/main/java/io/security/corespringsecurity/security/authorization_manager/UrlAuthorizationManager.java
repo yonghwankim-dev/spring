@@ -1,30 +1,26 @@
 package io.security.corespringsecurity.security.authorization_manager;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.hierarchicalroles.NullRoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
-import org.springframework.security.authorization.AuthoritiesAuthorizationManager;
 import org.springframework.security.authorization.AuthorityAuthorizationDecision;
-import org.springframework.security.authorization.AuthorityAuthorizationManager;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import io.security.corespringsecurity.security.service.SecurityResourceService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class UrlAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
 
 	private LinkedHashMap<RequestMatcher, List<String>> requestMap;
@@ -39,18 +35,18 @@ public class UrlAuthorizationManager implements AuthorizationManager<RequestAuth
 	}
 
 	@Override
-	public AuthorizationDecision check(Supplier<Authentication> supplier, RequestAuthorizationContext requestAuthorizationContext) {
-		// AuthoritiesAuthorizationManager authoritiesAuthorizationManager = new AuthoritiesAuthorizationManager();
-		// authoritiesAuthorizationManager.setRoleHierarchy(roleHierarchy);
-
+	public AuthorizationDecision check(Supplier<Authentication> supplier,
+		RequestAuthorizationContext requestAuthorizationContext) {
 		Authentication authentication = supplier.get();
 		HttpServletRequest request = requestAuthorizationContext.getRequest();
-		if (requestMap != null){
+		if (requestMap != null) {
 			for (Map.Entry<RequestMatcher, List<String>> entry : requestMap.entrySet()) {
 				if (entry.getKey().matches(request)) {
 					List<String> authorities = entry.getValue();
 					boolean isGranted = isGranted(authentication, authorities);
-					return new AuthorityAuthorizationDecision(isGranted, AuthorityUtils.createAuthorityList(authorities));
+					log.info("url : {}, isGranted : {}", request.getRequestURI(), isGranted);
+					return new AuthorityAuthorizationDecision(isGranted,
+						AuthorityUtils.createAuthorityList(authorities));
 				}
 			}
 		}
@@ -63,8 +59,8 @@ public class UrlAuthorizationManager implements AuthorizationManager<RequestAuth
 
 	private boolean isAuthorized(Authentication authentication, List<String> authorities) {
 		for (GrantedAuthority grantedAuthority : roleHierarchy.getReachableGrantedAuthorities(
-			authentication.getAuthorities())){
-			if (authorities.contains(grantedAuthority.getAuthority())){
+			authentication.getAuthorities())) {
+			if (authorities.contains(grantedAuthority.getAuthority())) {
 				return true;
 			}
 		}
@@ -78,7 +74,7 @@ public class UrlAuthorizationManager implements AuthorizationManager<RequestAuth
 
 		requestMap.clear();
 
-		while (iterator.hasNext()){
+		while (iterator.hasNext()) {
 			Map.Entry<RequestMatcher, List<String>> entry = iterator.next();
 			requestMap.put(entry.getKey(), entry.getValue());
 		}
