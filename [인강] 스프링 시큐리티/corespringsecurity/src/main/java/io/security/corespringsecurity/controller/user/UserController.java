@@ -1,16 +1,13 @@
 package io.security.corespringsecurity.controller.user;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.domain.dto.AccountDto;
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.domain.entity.AccountRole;
 import io.security.corespringsecurity.domain.entity.Role;
 import io.security.corespringsecurity.repository.RoleRepository;
@@ -32,13 +29,19 @@ public class UserController {
 		return "user/mypage";
 	}
 
+	@GetMapping("/order")
+	public String order() {
+		userService.order();
+		return "user/mypage";
+	}
+
 	@GetMapping("/users")
-	public String createUser(){
+	public String createUser() {
 		return "user/login/register";
 	}
 
 	@PostMapping("/users")
-	public String createUser(AccountDto accountDto){
+	public String createUser(AccountDto accountDto) {
 		ModelMapper modelMapper = new ModelMapper();
 		Account account = modelMapper.map(accountDto, Account.class);
 		account.setPassword(passwordEncoder.encode(account.getPassword()));

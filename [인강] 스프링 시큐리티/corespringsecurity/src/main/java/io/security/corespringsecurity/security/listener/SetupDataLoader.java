@@ -60,13 +60,17 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 		Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
 		createResourceIfNotFound("/admin/**", "", Set.of(adminRole), "url");
 		createResourceIfNotFound("/config", "", Set.of(adminRole), "url");
+		createResourceIfNotFound("io.security.corespringsecurity.aopsecurity.AopMethodService.methodSecured", "",
+			Set.of(adminRole), "method");
 		createUserIfNotFound("admin@gmail.com", "admin@admin.com", "pass", Set.of(adminRole));
 
 		Role managerRole = createRoleIfNotFound("ROLE_MANAGER", "매니저");
+		createUserIfNotFound("manager@gmail.com", "manager@manager.com", "pass", Set.of(managerRole));
 		createResourceIfNotFound("/messages/**", "", Set.of(managerRole), "url");
 
 		Role userRole = createRoleIfNotFound("ROLE_USER", "유저");
-		Resources myPageResource = createResourceIfNotFound("/mypage", "", Set.of(userRole), "url");
+		createUserIfNotFound("user", "user@user.com", "pass", Set.of(userRole));
+		createResourceIfNotFound("/mypage", "", Set.of(userRole), "url");
 
 		createRoleHierarchyIfNotFound(managerRole, adminRole);
 		createRoleHierarchyIfNotFound(userRole, managerRole);

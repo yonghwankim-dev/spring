@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Order(value = 1)
 public class SecurityConfig {
 
@@ -34,7 +37,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers("/", "/users", "user/login/**", "/login*", "/error").permitAll()
+				.requestMatchers("/", "/users", "user/login/**", "/login*", "/error", "/methodSecured").permitAll()
 				.anyRequest().access(unanimousBasedAuthorizationManager()));
 		http
 			.formLogin(configurer ->
@@ -48,7 +51,7 @@ public class SecurityConfig {
 			);
 		http.exceptionHandling(configurer ->
 			configurer.accessDeniedHandler(customAccessDeniedHandler()));
-
+		http.cors(AbstractHttpConfigurer::disable);
 		return http.build();
 	}
 

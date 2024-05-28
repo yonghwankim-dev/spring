@@ -6,12 +6,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import io.security.corespringsecurity.domain.dto.AccountDto;
 import io.security.corespringsecurity.domain.entity.Account;
@@ -21,9 +19,11 @@ import io.security.corespringsecurity.repository.RoleRepository;
 import io.security.corespringsecurity.repository.UserRepository;
 import io.security.corespringsecurity.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service("userService")
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
 		if (accountDto.getRoles() != null) {
 			Set<Role> roles = new HashSet<>();
-			accountDto.getRoles().forEach(role->{
+			accountDto.getRoles().forEach(role -> {
 				Role r = roleRepository.findByRoleName(role);
 				roles.add(r);
 			});
@@ -81,5 +81,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
+	}
+
+	@Override
+	@Secured("ROLE_MANAGER")
+	public void order() {
+		log.info("order");
 	}
 }

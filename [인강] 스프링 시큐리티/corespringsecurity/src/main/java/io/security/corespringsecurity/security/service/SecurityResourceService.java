@@ -2,7 +2,10 @@ package io.security.corespringsecurity.security.service;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,20 @@ public class SecurityResourceService {
 		List<Resources> resourcesList = repository.findAllResources();
 		for (Resources resource : resourcesList) {
 			result.put(new AntPathRequestMatcher(resource.getResourceName()), resource.getRoleNames());
+		}
+		return result;
+	}
+
+	@Transactional(readOnly = true)
+	public LinkedHashMap<String, List<ConfigAttribute>> getMethodResourceList() {
+		LinkedHashMap<String, List<ConfigAttribute>> result = new LinkedHashMap<>();
+
+		List<Resources> resourcesList = repository.findAllMethodResources();
+		for (Resources resource : resourcesList) {
+			List<ConfigAttribute> configAttributeList = resource.getRoleNames().stream()
+				.map(SecurityConfig::new)
+				.collect(Collectors.toList());
+			result.put(resource.getResourceName(), configAttributeList);
 		}
 		return result;
 	}
