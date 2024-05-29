@@ -28,7 +28,7 @@ public class SecurityResourceService {
 	public LinkedHashMap<RequestMatcher, List<String>> getResourceList() {
 		LinkedHashMap<RequestMatcher, List<String>> result = new LinkedHashMap<>();
 
-		List<Resources> resourcesList = repository.findAllResources();
+		List<Resources> resourcesList = repository.findAllUrlResources();
 		for (Resources resource : resourcesList) {
 			result.put(new AntPathRequestMatcher(resource.getResourceName()), resource.getRoleNames());
 		}
@@ -54,5 +54,19 @@ public class SecurityResourceService {
 		return accessIpRepository.findAll().stream()
 			.map(AccessIp::getIpAddress)
 			.toList();
+	}
+
+	@Transactional(readOnly = true)
+	public LinkedHashMap<String, List<ConfigAttribute>> getPointcutResourceList() {
+		LinkedHashMap<String, List<ConfigAttribute>> result = new LinkedHashMap<>();
+
+		List<Resources> resourcesList = repository.findAllPointcutResources();
+		for (Resources resource : resourcesList) {
+			List<ConfigAttribute> configAttributeList = resource.getRoleNames().stream()
+				.map(SecurityConfig::new)
+				.collect(Collectors.toList());
+			result.put(resource.getResourceName(), configAttributeList);
+		}
+		return result;
 	}
 }

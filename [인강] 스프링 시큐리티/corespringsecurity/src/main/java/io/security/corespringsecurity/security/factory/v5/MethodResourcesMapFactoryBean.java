@@ -10,17 +10,23 @@ import io.security.corespringsecurity.security.service.SecurityResourceService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class MethodResourcesFactoryBean implements FactoryBean<LinkedHashMap<String, List<ConfigAttribute>>> {
+public class MethodResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<String, List<ConfigAttribute>>> {
 
 	private LinkedHashMap<String, List<ConfigAttribute>> resourceMap;
 	private final SecurityResourceService securityResourceService;
+	private final String resourceType;
 
-	public MethodResourcesFactoryBean(SecurityResourceService securityResourceService) {
+	public MethodResourcesMapFactoryBean(SecurityResourceService securityResourceService, String resourceType) {
 		this.securityResourceService = securityResourceService;
+		this.resourceType = resourceType;
 	}
 
 	private void init() {
-		resourceMap = securityResourceService.getMethodResourceList();
+		if ("method".equals(resourceType)) {
+			resourceMap = securityResourceService.getMethodResourceList();
+		} else if ("pointcut".equals(resourceType)) {
+			resourceMap = securityResourceService.getPointcutResourceList();
+		}
 	}
 
 	@Override
@@ -28,7 +34,6 @@ public class MethodResourcesFactoryBean implements FactoryBean<LinkedHashMap<Str
 		if (resourceMap == null) {
 			init();
 		}
-		log.info("resourceMap : {}", resourceMap);
 		return resourceMap;
 	}
 

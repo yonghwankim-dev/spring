@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class AopSecurityController {
 
 	private final AopMethodService aopMethodService;
+	private final AopPointcutService aopPointcutService;
 
 	@GetMapping("/preAuthorize")
 	@PreAuthorize(value = "hasRole('ROLE_USER') and #accountDto.username == principal.username")
@@ -30,4 +31,11 @@ public class AopSecurityController {
 		return "aop/method";
 	}
 
+	@GetMapping("/pointcututSecured")
+	public String pointcututSecured(Model model) {
+		aopPointcutService.notSecured();
+		aopPointcutService.pointcutSecured();
+		model.addAttribute("method", "Success PointcututSecured");
+		return "aop/method";
+	}
 }

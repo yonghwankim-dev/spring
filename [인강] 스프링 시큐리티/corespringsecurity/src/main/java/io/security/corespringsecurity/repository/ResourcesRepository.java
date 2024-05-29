@@ -11,10 +11,13 @@ import io.security.corespringsecurity.domain.entity.Resources;
 
 public interface ResourcesRepository extends JpaRepository<Resources, Long> {
 	@Query("select r from Resources r join fetch r.resourcesRoleSet resourcesRole join fetch resourcesRole.role role where r.resourceType = 'url' order by r.orderNum desc")
-	List<Resources> findAllResources();
+	List<Resources> findAllUrlResources();
 
 	@Query("select r from Resources r join fetch r.resourcesRoleSet resourcesRole join fetch resourcesRole.role role where r.resourceType = 'method' order by r.orderNum desc")
 	List<Resources> findAllMethodResources();
+
+	@Query("select r from Resources r join fetch r.resourcesRoleSet resourcesRole join fetch resourcesRole.role role where r.resourceType = 'pointcut' order by r.orderNum desc")
+	List<Resources> findAllPointcutResources();
 
 	@Query("select r from Resources r join fetch r.resourcesRoleSet resourcesRole join fetch resourcesRole.role role where r.resourceType = 'url' and r.id = :id order by r.orderNum desc")
 	Optional<Resources> findResourcesById(@Param("id") Long id);
