@@ -28,7 +28,12 @@ public class Dish {
 		Comparator<Dish> dishCaloriesComparator = Comparator.comparingInt(Dish::getCalories);
 
 		List<Dish> menus = Arrays.asList(new Dish("pizza", 100), new Dish("pasta", 200));
+		// maximum calorie dish
 		Optional<Dish> mostCalorieDish = menus.stream().collect(Collectors.maxBy(dishCaloriesComparator));
-		System.out.println(mostCalorieDish.orElse(new Dish("None", 0)).getName());
+		System.out.println(mostCalorieDish.get().getName());
+
+		// minimum calorie dish
+		Optional<Dish> minCalorieDish = menus.stream().collect(Collectors.minBy(dishCaloriesComparator));
+		System.out.println(minCalorieDish.get().getName());
 	}
 }
