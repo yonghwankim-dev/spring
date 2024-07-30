@@ -40,11 +40,7 @@ public class Dish {
 
 	@Override
 	public String toString() {
-		return "Dish{" +
-			"name='" + name + '\'' +
-			", calories=" + calories +
-			", type=" + type +
-			'}';
+		return name;
 	}
 
 	public static void main(String[] args) {

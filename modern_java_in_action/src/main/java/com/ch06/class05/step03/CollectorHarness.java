@@ -1,7 +1,5 @@
 package com.ch06.class05.step03;
 
-import java.util.stream.Collectors;
-
 public class CollectorHarness {
 	public static void main(String[] args) {
 		test1();

@@ -41,11 +41,7 @@ public class Dish {
 
 	@Override
 	public String toString() {
-		return "Dish{" +
-			"name='" + name + '\'' +
-			", calories=" + calories +
-			", type=" + type +
-			'}';
+		return name;
 	}
 
 	public static void main(String[] args) {
@@ -76,5 +72,4 @@ public class Dish {
 				Collectors.flatMapping(dish -> dishTags.get(dish.getName()).stream(), Collectors.toSet())));
 		System.out.println(dishNamesByType);
 	}
-
 }

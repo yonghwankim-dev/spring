@@ -84,8 +84,8 @@ public class Dish {
 
 		Map<Boolean, Map<Type, List<Dish>>> vegetarianDishesByType = menu.stream()
 			.collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.groupingBy(Dish::getType)));
-		System.out.println(vegetarianDishesByType.get(true));
-		System.out.println(vegetarianDishesByType.get(false));
+		System.out.println(vegetarianDishesByType);
+		System.out.println();
 
 		Map<Boolean, Dish> mostCaloricPartitionedByVegetarian = menu.stream()
 			.collect(Collectors.partitioningBy(Dish::isVegetarian,
@@ -102,5 +102,4 @@ public class Dish {
 			.collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.counting()));
 		System.out.println(countingByVegetarian);
 	}
-
 }
