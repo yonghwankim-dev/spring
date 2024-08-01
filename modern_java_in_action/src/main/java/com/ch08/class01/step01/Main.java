@@ -14,7 +14,7 @@ public class Main {
 		try{
 			friends.add("Thibaut"); // unsupportedOperation
 		}catch (UnsupportedOperationException e){
-			System.out.println("set() is not supported");
+			System.out.println("add() is not supported");
 		}
 		System.out.println(friends);
 

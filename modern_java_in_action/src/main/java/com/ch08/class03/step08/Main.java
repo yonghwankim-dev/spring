@@ -41,6 +41,5 @@ public class Main {
 		// 중복된 키가 존재하면 값을 연결한다
 		friends.forEach((k, v)->everyone.merge(k, v, (movie1, movie2)-> movie1 + "&" + movie2));
 		System.out.println(everyone);
-
 	}
 }
