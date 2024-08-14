@@ -1,4 +1,4 @@
-package nemo.event_listener;
+package nemo.listener.transactional_event_listener;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class MemberSignupEvent {
 	private final String name;
+	private final boolean emailVerified;
 
 	@Override
 	public String toString() {

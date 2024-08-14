@@ -1,7 +1,6 @@
-package nemo.event_listener;
+package nemo.listener.event_listener;
 
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

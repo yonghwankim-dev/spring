@@ -1,4 +1,4 @@
-package nemo.event_listener;
+package nemo.listener.event_listener;
 
 import jakarta.persistence.Entity;
 
