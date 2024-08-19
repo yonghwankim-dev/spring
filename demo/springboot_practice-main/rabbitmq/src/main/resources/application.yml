@@ -1,0 +1,14 @@
+spring:
+  rabbitmq:
+    host: localhost # RabbitMQ host ip
+    port: 5672 # RabbitMQ port
+    username : guest # RabbitMQ web admin console id
+    password: guest # RabbitMQ web admin console password
+
+rabbitmq:
+  queue:
+    name: sample-queue # queue name
+  exchange:
+    name: sample-exchange # exchange name
+  routing:
+    key : key

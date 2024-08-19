@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management  # RabbitMQ의 최신 관리 플러그인 포함 이미지 사용
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  # RabbitMQ의 AMQP 포트
+      - "15672:15672"  # RabbitMQ 관리 콘솔 포트
+    environment:
+      RABBITMQ_DEFAULT_USER: guest  # 기본 사용자 이름
+      RABBITMQ_DEFAULT_PASS: guest  # 기본 비밀번호
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq  # 데이터를 지속적으로 저장하기 위한 볼륨
+volumes:
+  rabbitmq_data:
