@@ -2,7 +2,6 @@ package io.security.basicsecurity.step02;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -31,22 +29,40 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	enum Role {
+		USER("ROLE_USER"), ADMIN("ROLE_ADMIN"), SYS("ROLE_SYS");
+
+		private final String roleName;
+
+		Role(String roleName) {
+			this.roleName = roleName;
+		}
+	}
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
+			.securityMatcher("/shop/**")
+			.authorizeHttpRequests(authorize -> {
+				authorize.requestMatchers("/shop/login", "/shop/users/**").permitAll();
+				authorize.requestMatchers("/shop/mypage").hasRole(Role.USER.name());
+				authorize.requestMatchers("/shop/admin/pay").hasAuthority(Role.ADMIN.roleName);
+				authorize.requestMatchers("/shop/admin/**").hasAnyAuthority(Role.ADMIN.roleName, Role.SYS.roleName);
+			})
+			.securityMatcher("/**")
 			.authorizeHttpRequests(
 				authorizeHttpRequests ->
 					authorizeHttpRequests
 						.requestMatchers("/login").permitAll()
-						.requestMatchers("/user").hasRole("USER")
-						.requestMatchers("/admin/pay").hasRole("ADMIN")
-						.requestMatchers("/admin/**").hasAnyRole("ADMIN", "SYS")
+						.requestMatchers("/user").hasRole(Role.USER.name())
+						.requestMatchers("/admin/pay").hasRole(Role.ADMIN.name())
+						.requestMatchers("/admin/**").hasAnyRole(Role.ADMIN.name(), Role.SYS.name())
 						.anyRequest().authenticated()
 			);
 
 		http
-			.formLogin()
-				.successHandler(new AuthenticationSuccessHandler() {
+			.formLogin(configurer ->
+				configurer.successHandler(new AuthenticationSuccessHandler() {
 					@Override
 					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 						Authentication authentication) throws IOException, ServletException {
@@ -55,45 +71,46 @@ public class SecurityConfig {
 						String redirectUrl = savedRequest.getRedirectUrl();
 						response.sendRedirect(redirectUrl);
 					}
-				});
-
-		http.exceptionHandling()
-			// .authenticationEntryPoint(new AuthenticationEntryPoint() {
-			// 	@Override
-			// 	public void commence(HttpServletRequest request, HttpServletResponse response,
-			// 		AuthenticationException authException) throws IOException, ServletException {
-			// 		response.sendRedirect("/login");
-			// 	}
-			// })
-			.accessDeniedHandler(new AccessDeniedHandler() {
+				}));
+		http.exceptionHandling(configurer -> {
+			configurer.authenticationEntryPoint(new AuthenticationEntryPoint() {
+				@Override
+				public void commence(HttpServletRequest request, HttpServletResponse response,
+					AuthenticationException authException) throws IOException, ServletException {
+					response.sendRedirect("/login");
+				}
+			});
+			configurer.accessDeniedHandler(new AccessDeniedHandler() {
 				@Override
 				public void handle(HttpServletRequest request, HttpServletResponse response,
 					AccessDeniedException accessDeniedException) throws IOException, ServletException {
 					response.sendRedirect("/denied");
 				}
 			});
+		});
 		return http.build();
 	}
 
 	@Bean
-	public UserDetailsManager users(){
-
+	public UserDetailsManager users() {
+		// password 암호화 방식을 접두사로 추가합니다. => {noop} (별도 암호화없이 평문으로 저장)
+		final String PASSWORD = "{noop}1111";
 		UserDetails user = User.builder()
 			.username("user")
-			.password("{noop}1111") // password 암호화 방식을 접두사로 추가합니다. => {noop} (별도 암호화없이 평문으로 저장)
-			.roles("USER")
+			.password(PASSWORD)
+			.roles(Role.USER.name())
 			.build();
 
 		UserDetails sys = User.builder()
 			.username("sys")
-			.password("{noop}1111")
-			.roles("SYS")
+			.password(PASSWORD)
+			.roles(Role.SYS.name())
 			.build();
 
 		UserDetails admin = User.builder()
 			.username("admin")
-			.password("{noop}1111")
-			.roles("ADMIN", "SYS", "USER")
+			.password(PASSWORD)
+			.roles(Role.ADMIN.name(), Role.SYS.name(), Role.USER.name())
 			.build();
 		return new InMemoryUserDetailsManager(user, sys, admin);
 	}
