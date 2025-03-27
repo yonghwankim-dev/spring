@@ -13,12 +13,27 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
+	private final TeamRepository teamRepository;
+	private final TeamMemberRepository teamMemberRepository;
 	private final ApplicationEventPublisher eventPublisher;
 	@Transactional
-	public void signup(String name) {
+	public Member signup(String name, String teamName) {
 		Member member = new Member(name);
+		Team team = teamRepository.findByName(teamName).orElseThrow();
+		TeamMember teamMember = new TeamMember(member, team);
+
 		memberRepository.save(member);
-		eventPublisher.publishEvent(new MemberSignupEvent(member.getName()));
+		teamMemberRepository.save(teamMember);
+		eventPublisher.publishEvent(new MemberSignupEvent(member.getId()));
 		log.info("end signup service");
+		return member;
+	}
+
+	@Transactional
+	public void deleteTeamMember(Long memberId, String teamName) {
+		Member member = memberRepository.findById(memberId).orElseThrow();
+		log.info("member is {}", member);
+		teamMemberRepository.deleteByMemberIdAndTeamName(memberId, teamName);
+		eventPublisher.publishEvent(new TeamDeleteEvent(memberId));
 	}
 }

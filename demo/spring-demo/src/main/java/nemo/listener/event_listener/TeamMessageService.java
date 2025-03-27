@@ -1,5 +1,7 @@
 package nemo.listener.event_listener;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,14 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ConsoleSignupMessageService implements SignupMessageService {
+public class TeamMessageService {
 	private final MemberRepository memberRepository;
-
-	@Override
 	@Transactional
-	public void sendSignupMessage(Long memberId) {
-		Member fidnMember = memberRepository.findById(memberId).orElseThrow();
-		log.info("{}, congratulations on your membership.", fidnMember.getName());
-		log.info("findMember is {}", fidnMember);
+	public void sendDeleteMessage(TeamDeleteEvent event) {
+		Member member = memberRepository.findById(event.getMemberId()).orElseThrow();
+		log.info("member is {}", member);
 	}
 }

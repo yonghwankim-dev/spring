@@ -16,9 +16,9 @@ public class MemberSignupListener {
 	private final SignupMessageService signupMessageService;
 
 	@Async
-	@TransactionalEventListener
+	@EventListener
 	public void handleMemberSignupEvent(MemberSignupEvent event) {
 		log.info("MemberSignupListener.handleMemberSignupEvent, event = {}", event);
-		signupMessageService.sendSignupMessage(event.getName());
+		signupMessageService.sendSignupMessage(event.getMemberId());
 	}
 }

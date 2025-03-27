@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class MemberSignupEvent {
-	private final String name;
+	private final Long memberId;
 
 	@Override
 	public String toString() {
-		return "Member Event, name is " + name;
+		return "Member Event, memberId is " + memberId;
 	}
 }

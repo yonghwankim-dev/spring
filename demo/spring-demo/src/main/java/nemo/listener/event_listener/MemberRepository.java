@@ -1,15 +1,8 @@
 package nemo.listener.event_listener;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class MemberRepository {
-	private Map<String, Member> store = new ConcurrentHashMap<>();
+import org.springframework.data.jpa.repository.JpaRepository;
 
-	public void save(Member member) {
-		store.put(member.getName(), member);
-	}
+public interface MemberRepository extends JpaRepository<Member, Long> {
 }

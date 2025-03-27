@@ -1,0 +1,2 @@
+GET http://localhost:8080/sse-server/stream-sse
+Accept: text/event-stream

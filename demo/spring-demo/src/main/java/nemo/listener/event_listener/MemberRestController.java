@@ -14,8 +14,8 @@ public class MemberRestController {
 	private final MemberService memberService;
 
 	@PostMapping("/signup")
-	public ResponseEntity<String> signup(@RequestParam String name) {
-		memberService.signup(name);
+	public ResponseEntity<String> signup(@RequestParam String name, @RequestParam String teamName) {
+		memberService.signup(name, teamName);
 		return ResponseEntity.ok("ok");
 	}
 }
