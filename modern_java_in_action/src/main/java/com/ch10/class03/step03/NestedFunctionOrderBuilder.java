@@ -43,8 +43,8 @@ public class NestedFunctionOrderBuilder {
 	public static void main(String[] args) {
 		Order order =
 				order("BigCustomer",
-						buy(100, stock("SYMBOL", "NASDAQ"), at(40.0)),
-						buy(50, stock("OTHER", "NYSE"), at(100.0))
+						buy(100, stock("SYMBOL", on("NASDAQ")), at(40.0)),
+						buy(50, stock("OTHER", on("NYSE")), at(100.0))
 				);
 		System.out.println(order);
 	}

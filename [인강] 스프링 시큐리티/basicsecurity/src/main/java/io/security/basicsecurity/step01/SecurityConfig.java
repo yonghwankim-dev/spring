@@ -56,7 +56,7 @@ public class SecurityConfig {
 					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 						AuthenticationException exception) throws IOException, ServletException {
 						System.out.println("exception : " + exception.getMessage());
-						response.sendRedirect("/login");
+						response.sendRedirect("/login.html");
 					}
 				})
 				.permitAll() // loginPage로 접근하는 모든 사용자는 인증없이도 접근가능
@@ -77,7 +77,7 @@ public class SecurityConfig {
 					@Override
 					public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
 						Authentication authentication) throws IOException, ServletException {
-						response.sendRedirect("/login");
+						response.sendRedirect("/login.html");
 					}
 				}).deleteCookies("remember-me"));
 		http.rememberMe(configurer ->
