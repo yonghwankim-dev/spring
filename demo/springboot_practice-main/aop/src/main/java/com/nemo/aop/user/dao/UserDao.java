@@ -55,4 +55,18 @@ public class UserDao {
 			throw new IllegalStateException("Failed to update user", e);
 		}
 	}
+
+	public void insert(User user) {
+		String sql = "INSERT INTO users (name, level) VALUES (?, ?)";
+		try(
+			Connection con = dataSource.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+		) {
+			ps.setString(1, user.getName());
+			ps.setString(2, user.getLevel().name());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new IllegalStateException("Failed to insert user", e);
+		}
+	}
 }
