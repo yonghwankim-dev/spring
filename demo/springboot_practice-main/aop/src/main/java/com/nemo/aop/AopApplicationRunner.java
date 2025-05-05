@@ -12,6 +12,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.nemo.aop.user.dao.UserDao;
+import com.nemo.aop.user.domain.Level;
 import com.nemo.aop.user.domain.User;
 
 public class AopApplicationRunner implements ApplicationRunner {
@@ -27,6 +28,7 @@ public class AopApplicationRunner implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) {
 		upgradeLevels();
+		printAllUsers();
 	}
 
 	private void upgradeLevels(){
@@ -34,12 +36,34 @@ public class AopApplicationRunner implements ApplicationRunner {
 		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
 
 		try{
-			List<User> users = userDao.getAll();
-			System.out.println("Before upgrade: " + users);
+			upgradeLevelsInternal();
+			transactionManager.commit(status);
 		}catch (Exception e){
 			transactionManager.rollback(status);
 			throw e;
 		}
+	}
 
+	private void upgradeLevelsInternal() {
+		List<User> users = userDao.getAll();
+		for (User user : users){
+			if (canUpgradeLevel(user)){
+				upgradeUser(user);
+			}
+		}
+	}
+
+	private boolean canUpgradeLevel(User user) {
+		Level currentLevel = user.getLevel();
+		return currentLevel.nextLevel() != null;
+	}
+
+	private void upgradeUser(User user) {
+		Level nextLevel = user.getLevel().nextLevel();
+		userDao.update(user.getId(), nextLevel);
+	}
+
+	private void printAllUsers() {
+		userDao.getAll().forEach(System.out::println);
 	}
 }
