@@ -1,11 +1,8 @@
 package com.nemo.aop;
 
-import javax.sql.DataSource;
-
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
-import com.nemo.aop.user.dao.UserDao;
 import com.nemo.aop.user.domain.Level;
 import com.nemo.aop.user.domain.User;
 import com.nemo.aop.user.service.UserService;

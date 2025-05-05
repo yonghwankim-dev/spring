@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void upgradeLevels() {
 		List<User> users = userDao.getAll();
-		for (User user : users){
-			if (canUpgradeLevel(user)){
+		for (User user : users) {
+			if (canUpgradeLevel(user)) {
 				upgradeUser(user);
 			}
 		}
@@ -29,8 +29,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private void upgradeUser(User user) {
-		Level nextLevel = user.getLevel().nextLevel();
-		userDao.update(user.getId(), nextLevel);
+		userDao.update(user);
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		return userDao.getAll();
 	}
 
 	@Override
@@ -40,6 +44,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void add(User user) {
-		userDao.insert(user);
+		userDao.add(user);
 	}
 }

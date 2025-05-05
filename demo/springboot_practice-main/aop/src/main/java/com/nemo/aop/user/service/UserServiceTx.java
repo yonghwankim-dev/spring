@@ -1,5 +1,7 @@
 package com.nemo.aop.user.service;
 
+import java.util.List;
+
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -18,13 +20,18 @@ public class UserServiceTx implements UserService {
 	@Override
 	public void upgradeLevels() {
 		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-		try{
+		try {
 			userService.upgradeLevels();
 			transactionManager.commit(status);
-		}catch (Exception e){
+		} catch (Exception e) {
 			transactionManager.rollback(status);
 			throw e;
 		}
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		return userService.getAllUsers();
 	}
 
 	@Override
@@ -35,10 +42,10 @@ public class UserServiceTx implements UserService {
 	@Override
 	public void add(User user) {
 		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-		try{
+		try {
 			userService.add(user);
 			transactionManager.commit(status);
-		}catch (Exception e){
+		} catch (Exception e) {
 			transactionManager.rollback(status);
 			throw e;
 		}
