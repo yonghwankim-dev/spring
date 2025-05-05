@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.nemo.aop.hello.Hello;
+import com.nemo.aop.hello.HelloTarget;
+import com.nemo.aop.hello.HelloUppercase;
 import com.nemo.aop.user.dao.UserDaoImpl;
 import com.nemo.aop.user.service.UserService;
 import com.nemo.aop.user.service.UserServiceImpl;
@@ -34,7 +37,18 @@ public class AopApplicationConfig {
 	}
 
 	@Bean
-	public AopApplicationRunner aopApplicationRunner(UserService userService) {
-		return new AopApplicationRunner(userService);
+	public HelloTarget helloTarget() {
+		return new HelloTarget();
+	}
+
+	@Bean
+	@Primary
+	public HelloUppercase helloUppercase() {
+		return new HelloUppercase(helloTarget());
+	}
+
+	@Bean
+	public AopApplicationRunner aopApplicationRunner(UserService userService, Hello hello) {
+		return new AopApplicationRunner(userService, hello);
 	}
 }

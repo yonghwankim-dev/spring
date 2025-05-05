@@ -13,7 +13,7 @@ import com.nemo.aop.user.domain.User;
 
 class UserServiceImplTest {
 
-	private UserServiceImpl userService;
+	private UserService userService;
 	private MockUserDao userDao;
 
 	@BeforeEach
