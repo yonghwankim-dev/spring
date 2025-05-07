@@ -16,7 +16,7 @@ class GzipRedisSerializerTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		TypeReference<Member> typeRef = new TypeReference<>() {
 		};
-		RedisSerializer<Member> serializer = new GzipRedisSerializer<>(objectMapper, typeRef);
+		RedisSerializer<Member> serializer = new GzipRedisSerializer<>(objectMapper, typeRef, 1024, 4096);
 		Member kim = new Member(1L, "kim", 10);
 		// when
 		byte[] bytes = serializer.serialize(kim);

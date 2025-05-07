@@ -33,7 +33,7 @@ public class CacheConfiguration {
 		RedisTemplate<String, V> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new GzipRedisSerializer<>(objectMapper, typeReference));
+		redisTemplate.setValueSerializer(new GzipRedisSerializer<>(objectMapper, typeReference, -1, 4096));
 		return redisTemplate;
 	}
 }

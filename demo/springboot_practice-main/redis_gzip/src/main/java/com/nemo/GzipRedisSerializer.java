@@ -26,10 +26,6 @@ class GzipRedisSerializer<T> implements RedisSerializer<T> {
 		(byte)((GZIPInputStream.GZIP_MAGIC >> 8) & 0xFF)
 	};
 
-	public GzipRedisSerializer(ObjectMapper objectMapper, TypeReference<T> typeRef) {
-		this(objectMapper, typeRef, 1024, 4096);
-	}
-
 	public GzipRedisSerializer(ObjectMapper objectMapper, TypeReference<T> typeRef, int minCompressionSize,
 		int bufferSize) {
 		this.objectMapper = objectMapper;

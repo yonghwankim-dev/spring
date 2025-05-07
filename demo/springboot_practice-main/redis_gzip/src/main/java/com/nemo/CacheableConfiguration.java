@@ -62,7 +62,7 @@ class CacheableConfiguration {
 				RedisCache::getCacheName,
 				redisCache -> {
 					GzipRedisSerializer<?> serializer = new GzipRedisSerializer<>(objectMapper,
-						redisCache.getTypeRef(), 1024, 4096);
+						redisCache.getTypeRef(), -1, 4096);
 					return RedisCacheConfiguration.defaultCacheConfig()
 						.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer))
 						.disableCachingNullValues()
