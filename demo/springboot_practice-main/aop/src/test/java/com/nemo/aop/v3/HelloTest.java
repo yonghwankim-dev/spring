@@ -27,6 +27,25 @@ class HelloTest {
 		Assertions.assertThat(actual).hasToString("HELLO DAVE");
 	}
 
+	@Test
+	void sayHello2() {
+		// given
+		var classes = new Class[] {Hello.class};
+		HelloTarget helloTarget1 = new HelloTarget();
+		HelloTarget2 helloTarget2 = new HelloTarget2();
+		InvocationHandler uppercaseHandler = new UppercaseHandler(helloTarget1);
+		Hello proxy1 = (Hello)Proxy.newProxyInstance(getClass().getClassLoader(),
+			classes, uppercaseHandler);
+		Hello proxy2 = (Hello)Proxy.newProxyInstance(getClass().getClassLoader(),
+			classes, uppercaseHandler);
+		// when
+		String actual = proxy1.sayHello("Dave");
+		String actual2 = proxy2.sayHello("Dave");
+		// then
+		Assertions.assertThat(actual).hasToString("HELLO DAVE");
+		Assertions.assertThat(actual2).hasToString("HELLO DAVE");
+	}
+
 	@DisplayName("Hello 클래스의 sayHi 메서드를 호출하면 대문자로 변환된 결과를 반환한다")
 	@Test
 	void sayHello_whenStartsWithSayMethod_thenReturnUppercaseText() {
