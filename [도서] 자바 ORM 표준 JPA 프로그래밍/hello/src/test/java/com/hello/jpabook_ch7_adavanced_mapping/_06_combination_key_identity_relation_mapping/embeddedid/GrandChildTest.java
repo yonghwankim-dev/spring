@@ -6,6 +6,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,30 +28,45 @@ class GrandChildTest {
 		em = emf.createEntityManager();
 	}
 
+	@AfterEach
+	void tearDown() {
+		if (em != null && em.isOpen()) {
+			em.close();
+		}
+	}
+
+	@AfterAll
+	static void afterAll() {
+		if (emf != null && emf.isOpen()) {
+			emf.close();
+		}
+	}
+
 	@Test
 	@DisplayName("복합키 식별 관계에서 @EmbeddedId를 이용한 매핑 테스트")
 	public void test() {
 		// given
-		Parent parent = new Parent("parent1", "parent");
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+
+		Parent parent = new Parent("1", "parent");
 		ChildId childId = new ChildId(parent.getId(), "child1");
 		Child child = new Child(parent, childId, "child");
 		GrandChildId grandChildId = new GrandChildId(childId, "grandChild1");
 		GrandChild grandChild = new GrandChild(grandChildId, child, "grandChild");
 		// when
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
 		em.persist(parent);
 		em.persist(child);
 		em.persist(grandChild);
 		em.flush();
 		em.clear();
 		// then
-		Parent findParent = em.find(Parent.class, "parent1");
+		Parent findParent = em.find(Parent.class, "1");
 		Child findChild = em.find(Child.class, childId);
 		GrandChild findGrandChild = em.find(GrandChild.class, grandChildId);
 
 		SoftAssertions assertions = new SoftAssertions();
-		assertions.assertThat(findParent.getId()).isEqualTo("parent1");
+		assertions.assertThat(findParent.getId()).isEqualTo("1");
 		assertions.assertThat(findParent.getName()).isEqualTo("parent");
 		assertions.assertThat(findChild.getParent()).isEqualTo(findParent);
 		assertions.assertThat(findChild.getId()).isEqualTo(childId);

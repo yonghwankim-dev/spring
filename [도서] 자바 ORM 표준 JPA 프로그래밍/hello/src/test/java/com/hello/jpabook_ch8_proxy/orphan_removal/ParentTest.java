@@ -8,6 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +28,26 @@ class ParentTest {
 	@BeforeEach
 	public void beforeEach() {
 		em = emf.createEntityManager();
+	}
+
+	@AfterEach
+	void tearDown() {
+		if (em != null && em.isOpen()) {
+			EntityTransaction transaction = em.getTransaction();
+			transaction.begin();
+			em.createQuery("DELETE FROM Parent").executeUpdate();
+			em.createQuery("DELETE FROM Child").executeUpdate();
+			em.clear();
+			transaction.commit();
+			em.close();
+		}
+	}
+
+	@AfterAll
+	static void afterAll() {
+		if (emf != null && emf.isOpen()) {
+			emf.close();
+		}
 	}
 
 	@Test

@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +28,16 @@ class ParentTest {
 		em = emf.createEntityManager();
 	}
 
+	@AfterEach
+	void tearDown() {
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		em.createQuery("DELETE FROM Parent").executeUpdate();
+		em.createQuery("DELETE FROM Child").executeUpdate();
+		em.clear();
+		transaction.commit();
+	}
+
 	@Test
 	@DisplayName("Parent와 Child가 다대다 관계를 조인 테이블로 매핑한다.")
 	public void test1() {
@@ -39,9 +50,12 @@ class ParentTest {
 		transaction.begin();
 		em.persist(parent);
 		em.persist(child);
-		em.flush();
+		transaction.commit();
+
 		em.clear();
+
 		// then
+		transaction.begin();
 		Parent findParent = em.find(Parent.class, parent.getId());
 		Child findChild = em.find(Child.class, child.getId());
 

@@ -6,6 +6,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +25,20 @@ class BoardTest {
 	@BeforeEach
 	public void beforeEach() {
 		em = emf.createEntityManager();
+	}
+
+	@AfterEach
+	void tearDown(){
+		if (em != null && em.isOpen()) {
+			// all table delete
+			EntityTransaction transaction = em.getTransaction();
+			transaction.begin();
+			em.createQuery("DELETE FROM BoardDetail").executeUpdate();
+			em.createQuery("DELETE FROM Board").executeUpdate();
+			em.clear();
+			transaction.commit();
+			em.close();
+		}
 	}
 
 	@Test

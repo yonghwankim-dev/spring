@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.assertj.core.api.SoftAssertions;
@@ -34,6 +35,8 @@ class ParentTest {
 		Parent parent = new Parent(null, "parent", new ArrayList<>());
 		Child child = new Child(null, "child");
 		// when
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
 		em.persist(parent);
 		em.persist(child);
 		// then
@@ -43,5 +46,6 @@ class ParentTest {
 		SoftAssertions assertions = new SoftAssertions();
 		assertions.assertThat(findParent.getChild()).contains(findChild);
 		assertions.assertThat(findChild.getName()).isEqualTo("child");
+		transaction.rollback();
 	}
 }
